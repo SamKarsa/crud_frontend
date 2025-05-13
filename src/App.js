@@ -1,7 +1,7 @@
 import { Routes, Route,BrowserRouter } from 'react-router-dom';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import ShowUsers from './components/AllUsers';
-import Header from './components/header/Header';
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 function App() {
   return (
