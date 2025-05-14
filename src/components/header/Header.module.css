@@ -26,6 +26,6 @@
     transition: all 0.4s;
 }
 
-.profileCircle:hover .color_log {
+.profileCircle:hover .profileSymbol {
     color: #ffffff !important;
 }
