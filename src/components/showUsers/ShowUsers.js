@@ -16,8 +16,8 @@ const ShowUsers = () => {
 
     useEffect(() => {
         setFilteredUsers(
-            users.filter(user => 
-                user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) || 
+            users.filter(user =>
+                user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 user.email.toLowerCase().includes(searchTerm.toLowerCase())
             )
@@ -49,21 +49,21 @@ const ShowUsers = () => {
     }
 
     return (
-        <div className="container-fluid px-4 py-4">
-            <div className="card shadow border-0 rounded-4">
+        <div className="container-fluid px-3 py-3">
+            <div className="card  border-0 rounded-4">
                 {/* Header mejorado con estadísticas */}
-                <div className={`${styles.colorB} card-header bg-gradient text-white rounded-top-4 p-4`} >
+                <div className={`${styles.colorP} card-header bg-gradient text-white rounded-top-4 p-4`} >
                     <div className="row align-items-center">
                         <div className="col">
-                            <h3 className="mb-1 d-flex align-items-center">
-                                <i className="bi bi-people-fill me-2"></i>
+                            <h3 className={`${styles.colorT} mb-1 d-flex align-items-center`}>
+                                <i className={`bi bi-people-fill me-2`}></i>
                                 Usuarios
                             </h3>
-                            <p className="mb-0 small text-white-50">Gestión completa de usuarios registrados</p>
+                            <p className={`${styles.colorT} mb-0 small `}>Gestión completa de usuarios registrados</p>
                         </div>
                     </div>
                 </div>
-                
+
                 {/* Barra de filtrado y búsqueda */}
                 <div className="card-body bg-light bg-opacity-25 border-bottom">
                     <div className="row g-3 align-items-center">
@@ -72,9 +72,9 @@ const ShowUsers = () => {
                                 <span className="input-group-text bg-white border-end-0">
                                     <i className="bi bi-search text-muted"></i>
                                 </span>
-                                <input 
-                                    type="text" 
-                                    className="form-control border-start-0" 
+                                <input
+                                    type="text"
+                                    className="form-control border-start-0"
                                     placeholder="Buscar usuarios..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -126,11 +126,11 @@ const ShowUsers = () => {
                                                 <div>
                                                     <div className="mb-1">
                                                         <i className="bi bi-envelope me-2 text-muted"></i>
-                                                        <a href={`mailto:${user.email}`} className="text-decoration-none">{user.email}</a>
+                                                        <a href={`mailto:${user.email}`} className={`${styles.colorT} text-decoration-none`}>{user.email}</a>
                                                     </div>
                                                     <div>
                                                         <i className="bi bi-telephone me-2 text-muted"></i>
-                                                        <a href={`tel:${user.phone}`} className="text-decoration-none">{user.phone}</a>
+                                                        <a href={`tel:${user.phone}`} className={`${styles.colorT} text-decoration-none`}>{user.phone}</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -140,13 +140,12 @@ const ShowUsers = () => {
                                                 </span>
                                             </td>
                                             <td>
-                                                <span className={`badge rounded-pill px-3 py-2 ${
-                                                    user.position?.positionName === 'Admin' 
-                                                        ? 'bg-primary text-white' 
-                                                        : user.position?.positionName 
-                                                            ? 'bg-secondary bg-opacity-25 text-dark' 
+                                                <span className={`badge rounded-pill px-3 py-2 ${user.position?.positionName === 'Admin'
+                                                        ? 'bg-primary text-white'
+                                                        : user.position?.positionName
+                                                            ? 'bg-secondary bg-opacity-25 text-dark'
                                                             : 'bg-warning bg-opacity-25 text-warning'
-                                                }`}>
+                                                    }`}>
                                                     {user.position?.positionName || 'Sin Rol'}
                                                 </span>
                                             </td>
@@ -155,8 +154,8 @@ const ShowUsers = () => {
                                                     <button className="btn btn-outline-primary btn-sm rounded-start" title="Editar usuario">
                                                         <i className="bi bi-pencil-square"></i>
                                                     </button>
-                                                    <button 
-                                                        className="btn btn-outline-danger btn-sm rounded-end" 
+                                                    <button
+                                                        className="btn btn-outline-danger btn-sm rounded-end"
                                                         title="Eliminar usuario"
                                                     >
                                                         <i className="bi bi-trash"></i>
@@ -175,8 +174,8 @@ const ShowUsers = () => {
                                                     </div>
                                                     <h4 className="text-muted">No se encontraron usuarios</h4>
                                                     <p className="text-muted mb-4">
-                                                        {searchTerm 
-                                                            ? 'No hay resultados para tu búsqueda, intenta con otros términos' 
+                                                        {searchTerm
+                                                            ? 'No hay resultados para tu búsqueda, intenta con otros términos'
                                                             : 'Agrega nuevos usuarios para comenzar a trabajar con el sistema'}
                                                     </p>
                                                 </div>
@@ -188,7 +187,7 @@ const ShowUsers = () => {
                         </table>
                     </div>
                 </div>
-                
+
                 {/* Footer mejorado con paginación */}
                 <div className="card-footer bg-white rounded-bottom-4 p-3">
                     <div className="row align-items-center">

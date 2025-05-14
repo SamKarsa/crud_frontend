@@ -4,8 +4,8 @@ import styles from './Header.module.css'
 
 const Header = () => {
   return (
-    <header className='pb-4'>
-      <nav className={`${styles.color} navbar navbar-expand-lg navbar-dark shadow`}>
+    <header>
+      <nav className={`${styles.color} navbar navbar-expand-lg navbar-dark shadow-sm`}>
         <div className="container-fluid">
           {/* Logo/Brand */}
           <Link className="navbar-brand d-flex align-items-center px-4" to="/">
