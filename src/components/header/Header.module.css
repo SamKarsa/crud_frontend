@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Bytesized&display=swap');
 
-.color {
+.nav {
     background-color: #026873;
 }
 
@@ -21,11 +21,11 @@
     background-color: #026873 !important;
 }
 
-.color_log {
+.profileSymbol {
     color: #026873;
     transition: all 0.4s;
 }
 
-.profileCircle:hover .color_log {
+.profileCircle:hover .profileSymbol {
     color: #ffffff !important;
 }

@@ -7,9 +7,10 @@ const Header = () => {
     <header>
       <nav className={`${styles.color} navbar navbar-expand-lg navbar-dark shadow-sm`}>
         <div className="container-fluid">
+
           {/* Logo/Brand */}
           <Link className="navbar-brand d-flex align-items-center px-4" to="/">
-            <span className={`${styles.logo}`}>CRUD</span>
+            <span className={`${styles.logo}`}>C R U D</span>
           </Link>
 
           {/* Hamburger button for mobile */}
@@ -45,15 +46,13 @@ const Header = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false">
                 <div className={`${styles.profileCircle} d-flex align-items-center justify-content-center bg-light rounded-circle`}>
-                  <i className={`${styles.color_log} bi bi-person-fill fs-3`}></i>
+                  <i className={`${styles.profileSymbol} bi bi-person-fill fs-3`}></i>
                 </div>
               </button>
               <ul className="dropdown-menu dropdown-menu-end">
                 <li className="dropdown-item-text fw-bold text-center">Admin</li>
                 <li><hr className="dropdown-divider"/></li>
-                <li><Link className="dropdown-item" to="/profile">Perfil</Link></li>
-                <li><hr className="dropdown-divider"/></li>
-                <li><button className="dropdown-item text-danger">Cerrar sesión</button></li>
+                <li><button className="dropdown-item text-danger">Log Out</button></li>
               </ul>
             </div>
           </div>
