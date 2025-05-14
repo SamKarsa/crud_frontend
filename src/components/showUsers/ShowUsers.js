@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { showAlert } from '../funcitions';
+import { showAlert } from '../../funcitions';
+import styles from './ShowUsers.module.css';
 
 const ShowUsers = () => {
     const url = 'http://localhost:8080/api/users';
@@ -51,7 +52,7 @@ const ShowUsers = () => {
         <div className="container-fluid px-4 py-4">
             <div className="card shadow border-0 rounded-4">
                 {/* Header mejorado con estadísticas */}
-                <div className="card-header bg-gradient bg-primary text-white rounded-top-4 p-4">
+                <div className={`${styles.colorB} card-header bg-gradient text-white rounded-top-4 p-4`} >
                     <div className="row align-items-center">
                         <div className="col">
                             <h3 className="mb-1 d-flex align-items-center">
@@ -81,7 +82,7 @@ const ShowUsers = () => {
                             </div>
                         </div>
                         <div className="col-md-7 text-md-end">
-                            <button className="btn btn-primary fw-semibold px-4 py-2 rounded-pill shadow-sm">
+                            <button className={`${styles.colorB} btn btn-primary fw-semibold px-4 py-2 rounded-pill shadow-sm`}>
                                 <i className="bi bi-plus-lg me-2"></i>
                                 Agregar Usuario
                             </button>

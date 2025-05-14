@@ -1,6 +1,6 @@
 import { Routes, Route,BrowserRouter } from 'react-router-dom';
 import "bootstrap-icons/font/bootstrap-icons.css";
-import ShowUsers from './components/AllUsers';
+import Showusers from './components/showUsers/ShowUsers';
 import Header from './components/header/Header';
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
 <BrowserRouter>
     <Header />
     <Routes>
-      <Route path="/" element={<ShowUsers></ShowUsers>}></Route>
+      <Route path="/" element={<Showusers></Showusers>}></Route>
     </Routes>
     </BrowserRouter>
   );
