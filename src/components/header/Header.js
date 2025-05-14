@@ -5,7 +5,7 @@ import styles from './Header.module.css'
 const Header = () => {
   return (
     <header>
-      <nav className={`${styles.color} navbar navbar-expand-lg navbar-dark shadow-sm`}>
+      <nav className={`${styles.nav} navbar navbar-expand-lg navbar-dark shadow-sm`}>
         <div className="container-fluid">
 
           {/* Logo/Brand */}
