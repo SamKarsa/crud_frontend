@@ -1,8 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Oi&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bytesized&display=swap');
 
-.nav{
+.color {
     background-color: #026873;
 }
 
-.underdog_regular {
+.logo {
+    font-family: "Bytesized", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 50px;
+}   
+
+.profileCircle {
+    width: 50px;
+    height: 50px;
+    transition: all 0.3s;
+}
+
+.profileCircle:hover {
+    background-color: #026873 !important;
+}
+
+.color_log {
+    color: #026873;
+    transition: all 0.4s;
+}
+
+.profileCircle:hover .color_log {
+    color: #ffffff !important;
 }
