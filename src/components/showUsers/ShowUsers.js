@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { showAlert } from '../../funcitions';
+import { showAlert,deleteUser,confirmAlert } from '../../funcitions';
 import styles from './ShowUsers.module.css';
 
 const ShowUsers = () => {
@@ -36,7 +36,23 @@ const ShowUsers = () => {
         }
     };
 
+    const handleDelete = async (id)=> {
+        const confirmed = await confirmAlert('Are you sure you want to delete this user?');
+        if (!confirmed) return;
+        try{
+            await deleteUser(id);
+            showAlert('User deleted successfully', 'success');
+            getUsers();
 
+            const updateUsers =users.filter(user => user.id !=id);
+            setUsers(updateUsers);
+            setFilteredUsers(updateUsers);
+        
+        }catch (e){
+            showAlert('Error deleting user', 'error');
+        }
+    };
+    
 
     if (loading) {
         return (
@@ -157,6 +173,7 @@ const ShowUsers = () => {
                                                     <button
                                                         className="btn btn-outline-danger btn-sm rounded-end"
                                                         title="Eliminar usuario"
+                                                        onClick={() => handleDelete(user.Id)}
                                                     >
                                                         <i className="bi bi-trash"></i>
                                                     </button>
