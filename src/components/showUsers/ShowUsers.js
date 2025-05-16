@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import { showAlert,deleteUser,confirmAlert } from '../../funcitions';
+import { showAlert,deleteUser,confirmAlert } from '../../functions';
 import styles from './ShowUsers.module.css';
+import UserFormModal from '../UserFormModal/UserFormModal';
 
 const ShowUsers = () => {
     const url = 'http://localhost:8080/api/users';
@@ -9,9 +10,17 @@ const ShowUsers = () => {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredUsers, setFilteredUsers] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [modalMode, setModalMode] = useState('create');
+    const [selectedUser, setSelectedUser] = useState(null);
+
+    const hasFetched = useRef(false);
 
     useEffect(() => {
+        if (hasFetched.current) return;
+
         getUsers();
+        hasFetched.current = true;
     }, []);
 
     useEffect(() => {
@@ -44,7 +53,7 @@ const ShowUsers = () => {
             showAlert('User deleted successfully', 'success');
             getUsers();
 
-            const updateUsers =users.filter(user => user.id !=id);
+            const updateUsers =users.filter(user => user.id !==id);
             setUsers(updateUsers);
             setFilteredUsers(updateUsers);
         
@@ -53,6 +62,21 @@ const ShowUsers = () => {
         }
     };
     
+        const handleCreate = () => {
+            setModalMode('create');
+            setSelectedUser(null);
+            setShowModal(true);
+        }
+    
+        const handleEdit = (user) => {
+            setModalMode('edit');
+            setSelectedUser(user);
+            setShowModal(true);
+        }
+    
+        const handleClose = () => {
+            setShowModal(false);
+        }
 
     if (loading) {
         return (
@@ -98,7 +122,9 @@ const ShowUsers = () => {
                             </div>
                         </div>
                         <div className="col-md-7 text-md-end">
-                            <button className={`${styles.colorB} btn btn-primary fw-semibold px-4 py-2 rounded-pill shadow-sm`}>
+                            <button 
+                                onClick={handleCreate}
+                                className={`${styles.colorB} btn btn-primary fw-semibold px-4 py-2 rounded-pill shadow-sm`}>
                                 <i className="bi bi-plus-lg me-2"></i>
                                 Agregar Usuario
                             </button>
@@ -128,13 +154,13 @@ const ShowUsers = () => {
                             <tbody>
                                 {filteredUsers.length > 0 ? (
                                     filteredUsers.map(user => (
-                                        <tr key={user.Id}>
-                                            <td className="ps-4 fw-semibold text-primary">#{user.Id}</td>
+                                        <tr key={user.id}>
+                                            <td className="ps-4 fw-semibold text-primary">#{user.id}</td>
                                             <td>
                                                 <div className="d-flex align-items-center">
                                                     <div>
                                                         <h6 className="mb-0">{user.firstName} {user.lastName}</h6>
-                                                        <small className="text-muted">ID: {user.Id}</small>
+                                                        <small className="text-muted">ID: {user.id}</small>
                                                     </div>
                                                 </div>
                                             </td>
@@ -167,13 +193,16 @@ const ShowUsers = () => {
                                             </td>
                                             <td className="text-end pe-4">
                                                 <div className="btn-group" role="group">
-                                                    <button className="btn btn-outline-primary btn-sm rounded-start" title="Editar usuario">
+                                                    <button 
+                                                        onClick={() => handleEdit(user)}
+                                                        className="btn btn-outline-primary btn-sm rounded-start" 
+                                                        title="Editar usuario">
                                                         <i className="bi bi-pencil-square"></i>
                                                     </button>
                                                     <button
                                                         className="btn btn-outline-danger btn-sm rounded-end"
                                                         title="Eliminar usuario"
-                                                        onClick={() => handleDelete(user.Id)}
+                                                        onClick={() => handleDelete(user.id)}
                                                     >
                                                         <i className="bi bi-trash"></i>
                                                     </button>
@@ -237,6 +266,15 @@ const ShowUsers = () => {
                     </div>
                 </div>
             </div>
+            {showModal && (
+                <UserFormModal
+                    show={showModal}
+                    userData={selectedUser}
+                    handleClose={handleClose}
+                    onSuccess={getUsers}
+                    mode={modalMode}
+                />
+            )}
         </div>
     );
 };
