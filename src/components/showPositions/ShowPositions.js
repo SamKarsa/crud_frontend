@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { confirmAlert, showAlert } from '../../functions';
+import { deletePosition } from '../../functions';
 
 const ShowPositions = () => {
     const url = 'http://localhost:8080/api/positions';
@@ -34,6 +36,27 @@ const ShowPositions = () => {
             console.error('Error fetching positions:', err);
         }
     };
+
+const handleDeletePosition = async (positionid) => {
+    const confirmed = await confirmAlert('Are you sure you want to delete this position?');
+    if (!confirmed) return;
+    getPositions();
+
+    try {
+        await deletePosition(positionid);
+        showAlert('Position deleted succesfully', 'success');
+
+        //Actualizar el estado
+
+        const updatedPositions = positions.filter(position => position.positionid !== positionid);
+        setPositions(updatedPositions);
+        setFilteredPositions(updatedPositions);
+    } catch (e) {
+        showAlert('Error deleting position', 'error');
+        console.error('Delete error;', e);
+    }
+}
+
 
     if (loading) {
         return <div>Cargando posiciones...</div>;
@@ -121,7 +144,7 @@ const ShowPositions = () => {
                                                 <button className="btn btn-outline-primary btn-sm rounded-start" title="Edit Position">
                                                     <i className="bi bi-pencil-square"></i>
                                                 </button>
-                                                <button className="btn btn-outline-danger btn-sm rounded-end" title="Delete Position">
+                                                <button className="btn btn-outline-danger btn-sm rounded-end" title="Delete Position" onClick={() => handleDeletePosition(position.positionId)}>
                                                     <i className="bi bi-trash"></i>
                                                 </button>
                                             </div>

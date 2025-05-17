@@ -41,3 +41,14 @@ export async  function deleteUser(id){
         throw new Error('Error deleting user:' + e.message)
     }
 }
+
+const deletePosition_url = 'http://localhost:8080/api/positions';
+
+export async function deletePosition(id){
+    try{
+        const response = await axios.delete(`${deletePosition_url}/${id}`);
+            return response.data;
+    }catch (e) {
+        throw new Error('Error delete position: ' + e.message);
+    }
+}
