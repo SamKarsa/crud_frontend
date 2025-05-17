@@ -10,17 +10,22 @@ const PositionFormModal = ({ show, handleClose, positionData, onSuccess, mode })
         status: true,
     });
     
+    const [originalForm, setOriginalForm] = useState({});
+
     useEffect(() => {
         if (mode === 'edit' && positionData) {
-            setForm({
+            const formData = {
                 positionName: positionData.positionName || '',
                 status: positionData.status !== undefined ? positionData.status : true,
-            });
-        }else {
+            };
+            setForm(formData);
+            setOriginalForm(formData); // Store original data for comparison
+        } else {
             setForm({
                 positionName: '',
                 status: true
             });
+            setOriginalForm({}); // Reset original form
         }
     }, [mode, positionData]);
 
@@ -33,18 +38,33 @@ const PositionFormModal = ({ show, handleClose, positionData, onSuccess, mode })
     };
 
     const handleSubmit = async () => {
-        try{
-            if(mode === 'edit'){
-                await axios.put(`http://localhost:8080/api/positions/${positionData.positionId}`, form);
-                showAlert('User edited successfully', 'success');
-            }else {
+        try {
+            if (mode === 'create') {
                 await axios.post('http://localhost:8080/api/positions/', form);
-                showAlert('Position save successfully', 'success');
+                showAlert('Position saved successfully', 'success');
+            } else {
+                const changedFields = {};
+                let hasChanges = false;
+                
+                Object.keys(form).forEach(key => {
+                    if (form[key] !== originalForm[key]) {
+                        changedFields[key] = form[key];
+                        hasChanges = true;
+                    }
+                });
+                
+                if (!hasChanges) {
+                    handleClose();
+                    return;
+                }
+                
+                await axios.put(`http://localhost:8080/api/positions/${positionData.positionId}`, changedFields);
+                showAlert('Position updated successfully', 'success');
             }
             handleClose();
             onSuccess();
         } catch (e) {
-            showAlert('Error to save position', 'error');
+            showAlert(e.response?.data?.message || 'Error saving position', 'error');
             console.error('Error:', e.response?.data || e.message);
         }
     };
