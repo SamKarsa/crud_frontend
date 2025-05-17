@@ -43,10 +43,10 @@ const ShowPositions = () => {
         }
     };
 
-const handleDeletePosition = async (positionid) => {
-    const confirmed = await confirmAlert('Are you sure you want to delete this position?');
-    if (!confirmed) return;
-    getPositions();
+    const handleDeletePosition = async (positionid) => {
+        const confirmed = await confirmAlert('Are you sure you want to delete this position?');
+        if (!confirmed) return;
+        getPositions();
 
     try {
         await deletePosition(positionid);
@@ -155,7 +155,7 @@ const handleDeletePosition = async (positionid) => {
                                             </div>
                                         </td>
                                         <td>
-                                        <span className={` badge rounded-pill ${position.status ? styles.activeStatus : styles.disableStatus} fs-6  px-3 py-1`}>
+                                        <span className={`badge rounded-pill ${position.status ? styles.ActiveStatus : styles.DisableStatus} fs-6  px-3 py-1`}>
                                             <p className="mb-0">{position.status ? 'Active' : 'Disable'}</p>
                                         </span>
                                         </td>

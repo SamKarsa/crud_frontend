@@ -6,16 +6,16 @@ border: none;
 
 
 .colorP{
-   background-color: rgb(255, 255, 255);
-   color: #026873;
+  background-color: rgb(255, 255, 255);
+  color: #026873;
 }
 .colorT{
-   color:black;
+  color:black;
 }
 
 .colori{
-   background-color: #026873;
-   color:#026873
+  background-color: #026873;
+  color:#026873
 }
 
 .pageLink {
@@ -30,13 +30,13 @@ border: none;
 
 
 /* Agrega estas clases a tu archivo CSS Module */
-.activeStatus {
+.ActiveStatus {
   background-color: rgba(29, 151, 35, 0.1);
   color: #026873;
   border: 1px solid #026873;
 }
 
-.disableStatus {
+.DisableStatus {
   background-color: rgba(220, 53, 69, 0.1);
   color: #dc3545;
   border: 1px solid #dc3545;
