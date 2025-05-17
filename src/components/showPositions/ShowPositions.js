@@ -3,6 +3,7 @@ import axios from 'axios';
 import { confirmAlert, showAlert } from '../../functions';
 import { deletePosition } from '../../functions';
 import PositionFormModal from '../positionFormModal/PositionFormModal';
+import styles from '../showUsers/ShowUsers.module.css'
 
 
 const ShowPositions = () => {
@@ -24,7 +25,7 @@ const ShowPositions = () => {
         setFilteredPositions(
             positions.filter(position =>
                 position.positionName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                (position.status ? 'activo' : 'inactivo').includes(searchTerm.toLowerCase())
+                (position.status ? 'active' : 'disable').includes(searchTerm.toLowerCase())
             )
         );
     }, [searchTerm, positions]);
@@ -50,7 +51,7 @@ const handleDeletePosition = async (positionid) => {
     try {
         await deletePosition(positionid);
         showAlert('Position deleted succesfully', 'success');
-
+        getPositions();
         //Actualizar el estado
 
         const updatedPositions = positions.filter(position => position.positionid !== positionid);
@@ -95,7 +96,7 @@ const handleDeletePosition = async (positionid) => {
                             <h3 className="mb-1 d-flex align-items-center">
                                 <i className="bi bi-briefcase-fill me-2"></i> Positions
                             </h3>
-                            <p className="mb-0 small">All positions in a list</p>
+                            <p className="mb-0 small">All Business positions</p>
                         </div>
                     </div>
                 </div>
@@ -118,7 +119,7 @@ const handleDeletePosition = async (positionid) => {
                         </div>
                     </div>
                     <div className="col-md-7 text-md-end">
-                        <button onClick={handleCreate} className={`btn btn-primary fw-semibold px-4 py-2 rounded-pill shadow-sm`}>
+                        <button onClick={handleCreate} className={`${styles.colorB} fw-semibold px-4 py-2 rounded-pill `}>
                             <i className="bi bi-plus-lg me-2"></i> Add Position
                         </button>
                     </div>
@@ -145,19 +146,18 @@ const handleDeletePosition = async (positionid) => {
                             {filteredPositions.length > 0 ? (
                                 filteredPositions.map(position => (
                                     <tr key={position.positionId}>
-                                        <td className="ps-4 fw-semibold text-primary">#{position.positionId}</td>
+                                        <td className="ps-4 fw-semibold text-dark">{position.positionId}</td>
                                         <td>
                                             <div className="d-flex align-items-center">
                                                 <div>
                                                     <h6 className="mb-0">{position.positionName}</h6>
-                                                    <small className="text-muted">ID: {position.positionId}</small>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
-                                            <span className="badge bg-light text-dark border px-3 py-2">
-                                                <h6 className="mb-0">{position.status ? 'Active' : 'Inactive'}</h6>
-                                            </span>
+                                        <span className={` badge rounded-pill ${position.status ? styles.activeStatus : styles.disableStatus} fs-6  px-3 py-1`}>
+                                            <p className="mb-0">{position.status ? 'Active' : 'Disable'}</p>
+                                        </span>
                                         </td>
                                         <td className="text-end pe-4">
                                             <div className="btn-group">
@@ -177,13 +177,13 @@ const handleDeletePosition = async (positionid) => {
                                         <div className="p-4">
                                             <div className="d-flex flex-column align-items-center">
                                                 <div className="display-1 text-muted mb-3">
-                                                    <i className="bi bi-person-x"></i>
+                                                    <i className="bi bi-briefcase"></i>
                                                 </div>
-                                                <h4 className="text-muted">Nof found positions</h4>
+                                                <h4 className="text-muted">Not found positions</h4>
                                                 <p className="text-muted mb-4">
                                                     {searchTerm
                                                         ? 'No results found for your search, try different terms.'
-                                                        : 'Add new users to start working with the system.'}
+                                                        : 'Add new positions to start working with the system.'}
                                                 </p>
                                             </div>
                                         </div>

@@ -1,13 +1,73 @@
 .colorB{
-background-color: #005281;
-border-color: #005281
+background-color: #026873;
+color: white;
+border: none;
 }
 
 
 .colorP{
    background-color: rgb(255, 255, 255);
+   color: #026873;
 }
 .colorT{
    color:black;
 }
 
+.colori{
+   background-color: #026873;
+   color:#026873
+}
+
+.pageLink {
+  color: black;
+}
+
+.activeLink {
+  background-color: #026873;
+  color: white;
+  border-color: #026873;
+}
+
+
+/* Agrega estas clases a tu archivo CSS Module */
+.activeStatus {
+  background-color: rgba(29, 151, 35, 0.1);
+  color: #026873;
+  border: 1px solid #026873;
+}
+
+.disableStatus {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+  border: 1px solid #dc3545;
+}
+
+/* Posición Admin - Azul fuerte con autoridad */
+.adminPosition {
+  background-color: #0d6efd;
+  color: white;
+  font-weight: 600;
+  border: 1px solid #0b5ed7;
+}
+
+/* Posición Supervisor - Púrpura con autoridad */
+.supervisorPosition {
+  background-color: #6f42c1;
+  color: white;
+  font-weight: 500;
+  border: 1px solid #5a32a3;
+}
+
+/* Posición normal - Gris neutro */
+.defaultPosition {
+  background-color: #e9ecef;
+  color: #495057;
+  border: 1px solid #dee2e6;
+}
+
+/* Posición inactiva - Rojo suave */
+.inactivePosition {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+  border: 1px solid rgba(220, 53, 69, 0.3);
+}

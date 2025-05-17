@@ -29,15 +29,51 @@ const PositionFormModal = ({ show, handleClose, positionData, onSuccess, mode })
         }
     }, [mode, positionData]);
 
+
+    const [errors, setErrors]= useState({});
+
+
+    const validate= (name, value) => {
+
+        const newErrors = {...errors};
+
+        if (name === 'positionName'){
+            if (!value){
+                newErrors.positionName = 'Position name is required';
+            }else if (value.lenght < 3 || value.lenght > 50){
+                newErrors.positionName = 'Position name must be between 3 and 50 characters';
+            }else{
+                delete newErrors.postionName;
+            }
+        }
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    }
+
     const handleChange = e => {
         const { name, value, type, checked } = e.target;
+        let formattedValue = value;
+
+        if (name === 'positionName') {
+            formattedValue = value.toLowerCase().replace(/(^|\s|'|-)\w/g, char => char.toUpperCase());
+        }
+
         setForm({
             ...form,
-            [name]: type === 'checkbox' ? checked : value
+            [name]: type === 'checkbox' ? checked : formattedValue
         });
+
+        validate(name,formattedValue);
     };
 
     const handleSubmit = async () => {
+        const ispositionNameValid = validate('positionName', form.positionName);
+
+        if (!ispositionNameValid){
+            showAlert('Please fix the errors before submitting', 'error');
+            return;
+        }
+
         try {
             if (mode === 'create') {
                 await axios.post('http://localhost:8080/api/positions/', form);
@@ -70,46 +106,47 @@ const PositionFormModal = ({ show, handleClose, positionData, onSuccess, mode })
     };
 
 
-  return (
-    <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-            <Modal.Title>{mode === 'create' ? 'Creat Position' : 'Edit Position'}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-            <input
-                name="positionName"
-                placeholder="Name"
-                value={form.positionName}
-                onChange={handleChange}
-                className="form-control mb-3"
-            />
-            {mode === 'edit' && (
-                <div className="form-check form-switch">
-                    <input
-                        name="status"
-                        type="checkbox"
-                        className="form-check-input"
-                        checked={form.status}
-                        onChange={handleChange}
-                        id="statusSwitch"
-                    />
-                    <label className="form-check-label" htmlFor="statusSwitch">
-                        {form.status ? 'Active' : 'Inactive'}
-                    </label>
-                </div>
+    return (
+        <Modal show={show} onHide={handleClose} centered>
+            <Modal.Header closeButton>
+                <Modal.Title>{mode === 'create' ? 'Creat Position' : 'Edit Position'}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <input
+                    name="positionName"
+                    placeholder="Name"
+                    value={form.positionName}
+                    onChange={handleChange}
+                    className={`form-control mb-3 ${errors.positionName ? 'is-invalid': ''}`}
+                />
+                {errors.positionName && <div className="invalid-feedback">{errors.positionName}</div>}
+                {mode === 'edit' && (
+                    <div className="form-check form-switch">
+                        <input
+                            name="status"
+                            type="checkbox"
+                            className="form-check-input"
+                            checked={form.status}
+                            onChange={handleChange}
+                            id="statusSwitch"
+                        />
+                        <label className="form-check-label" htmlFor="statusSwitch">
+                            {form.status ? 'Active' : 'Disable'}
+                        </label>
+                    </div>
 
-            )}
-        </Modal.Body>
-        <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-                Cancel 
-            </Button>
-            <Button variant="primary" onClick={handleSubmit}>
-                {mode === 'create' ? 'Create' : 'Save Changes'}
-            </Button>
-        </Modal.Footer>
-    </Modal>
-  )
+                )}
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Cancel 
+                </Button>
+                <Button variant="primary" onClick={handleSubmit}>
+                    {mode === 'create' ? 'Create' : 'Save Changes'}
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    )
 }
 
 export default PositionFormModal

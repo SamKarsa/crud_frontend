@@ -97,9 +97,9 @@ const ShowUsers = () => {
                         <div className="col">
                             <h3 className={`${styles.colorT} mb-1 d-flex align-items-center`}>
                                 <i className={`bi bi-people-fill me-2`}></i>
-                                Usuarios
+                                Users
                             </h3>
-                            <p className={`${styles.colorT} mb-0 small `}>Gestión completa de usuarios registrados</p>
+                            <p className={`${styles.colorT} mb-0 small `}>Complete gestion of registered users</p>
                         </div>
                     </div>
                 </div>
@@ -115,7 +115,7 @@ const ShowUsers = () => {
                                 <input
                                     type="text"
                                     className="form-control border-start-0"
-                                    placeholder="Buscar usuarios..."
+                                    placeholder="Search Users..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
@@ -124,9 +124,9 @@ const ShowUsers = () => {
                         <div className="col-md-7 text-md-end">
                             <button 
                                 onClick={handleCreate}
-                                className={`${styles.colorB} btn btn-primary fw-semibold px-4 py-2 rounded-pill shadow-sm`}>
+                                className={`${styles.colorB}  fw-semibold px-4 py-2 rounded-pill `}>
                                 <i className="bi bi-plus-lg me-2"></i>
-                                Agregar Usuario
+                                Add User
                             </button>
                         </div>
                     </div>
@@ -144,23 +144,23 @@ const ShowUsers = () => {
                                             <i className="bi bi-arrow-down-short ms-1 text-muted"></i>
                                         </div>
                                     </th>
-                                    <th>Nombre completo</th>
-                                    <th>Contacto</th>
-                                    <th>Edad</th>
-                                    <th>Rol</th>
-                                    <th className="text-end pe-4">Acciones</th>
+                                    <th>Full Name</th>
+                                    <th>Contact</th>
+                                    <th>Age</th>
+                                    <th>Position</th>
+                                    <th className="text-end pe-4">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {filteredUsers.length > 0 ? (
                                     filteredUsers.map(user => (
                                         <tr key={user.id}>
-                                            <td className="ps-4 fw-semibold text-primary">#{user.id}</td>
+                                            <td className="ps-4 fw-semibold text-dark">{user.id}</td>
                                             <td>
                                                 <div className="d-flex align-items-center">
                                                     <div>
                                                         <h6 className="mb-0">{user.firstName} {user.lastName}</h6>
-                                                        <small className="text-muted">ID: {user.id}</small>
+
                                                     </div>
                                                 </div>
                                             </td>
@@ -178,18 +178,24 @@ const ShowUsers = () => {
                                             </td>
                                             <td>
                                                 <span className="badge bg-light text-dark border px-3 py-2">
-                                                    {user.age} años
+                                                    {user.age} Years
                                                 </span>
                                             </td>
                                             <td>
-                                                <span className={`badge rounded-pill px-3 py-2 ${user.position?.positionName === 'Admin'
-                                                        ? 'bg-primary text-white'
-                                                        : user.position?.positionName
-                                                            ? 'bg-secondary bg-opacity-25 text-dark'
-                                                            : 'bg-warning bg-opacity-25 text-warning'
-                                                    }`}>
-                                                    {user.position?.positionName || 'Sin Rol'}
-                                                </span>
+                                            <span className={`badge rounded-pill px-3 py-2 ${
+                                                !user.position || !user.position.status 
+                                                ? styles.inactivePosition // Rojo suave si está inactivo
+                                                : user.position.positionName === 'Admin' 
+                                                    ? styles.adminPosition 
+                                                    : user.position.positionName === 'Supervisor' 
+                                                    ? styles.supervisorPosition 
+                                                    : styles.defaultPosition
+                                            }`}>
+                                                {user.position?.positionName || 'No Position'}
+                                                {user.position?.status === false && (
+                                                <i className="bi bi-x-circle ms-2"></i>
+                                                )}
+                                            </span>
                                             </td>
                                             <td className="text-end pe-4">
                                                 <div className="btn-group" role="group">
@@ -218,11 +224,11 @@ const ShowUsers = () => {
                                                     <div className="display-1 text-muted mb-3">
                                                         <i className="bi bi-person-x"></i>
                                                     </div>
-                                                    <h4 className="text-muted">No se encontraron usuarios</h4>
+                                                    <h4 className="text-muted">No users found</h4>
                                                     <p className="text-muted mb-4">
                                                         {searchTerm
-                                                            ? 'No hay resultados para tu búsqueda, intenta con otros términos'
-                                                            : 'Agrega nuevos usuarios para comenzar a trabajar con el sistema'}
+                                                            ? 'There are no results for your search, try other terms'
+                                                            : 'Add new users to start working with the system'}
                                                     </p>
                                                 </div>
                                             </div>
@@ -239,26 +245,26 @@ const ShowUsers = () => {
                     <div className="row align-items-center">
                         <div className="col-md-6">
                             <span className="text-muted">
-                                Mostrando <strong>{filteredUsers.length}</strong> de <strong>{users.length}</strong> usuarios
+                                Showing <strong>{filteredUsers.length}</strong> of <strong>{users.length}</strong> users
                             </span>
                         </div>
                         <div className="col-md-6">
-                            <nav aria-label="Page navigation" className="float-md-end">
-                                <ul className="pagination pagination-sm mb-0">
-                                    <li className="page-item disabled">
-                                        <span className="page-link">Anterior</span>
+                            <nav aria-label="..." className='float-md-end'>
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a href="#" class="page-link  text-dark border-secondary">Previous</a>
                                     </li>
-                                    <li className="page-item active">
-                                        <span className="page-link">1</span>
+                                    <li class="page-item">
+                                        <a class="page-link  text-dark border-dark" href="#">1</a>
                                     </li>
-                                    <li className="page-item">
-                                        <a className="page-link" href="#">2</a>
+                                    <li class="page-item active">
+                                        <a class="page-link  bg-light text-dark border-dark" href="#" aria-current="page">2</a>
                                     </li>
-                                    <li className="page-item">
-                                        <a className="page-link" href="#">3</a>
+                                    <li class="page-item">
+                                        <a class="page-link  text-dark border-dark" href="#">3</a>
                                     </li>
-                                    <li className="page-item">
-                                        <a className="page-link" href="#">Siguiente</a>
+                                    <li class="page-item">
+                                        <a class="page-link  text-dark border-dark" href="#">Next</a>
                                     </li>
                                 </ul>
                             </nav>

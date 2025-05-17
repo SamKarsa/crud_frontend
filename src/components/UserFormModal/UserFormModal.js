@@ -50,7 +50,8 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
             const fetchPositions = async () => {
                 try {
                     const response = await axios.get('http://localhost:8080/api/positions');
-                    setPositions(response.data);
+                    const activePositions = response.data.filter(position => position.status === true);
+                    setPositions(activePositions);
                 } catch (error) {
                     showAlert('Error al cargar los roles', 'error');
                 }
@@ -141,23 +142,35 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
             setErrors(newErrors);
     }
 
-    const handleChange = e => {
+        const handleChange = e => {
+        const { name, value } = e.target;
+        
+        let formattedValue = value;
+        
+        // Formatear nombres y apellidos (primera letra mayúscula)
+        if (name === 'firstName' || name === 'lastName') {
+            formattedValue = value.toLowerCase().replace(/(^|\s|'|-)\w/g, char => char.toUpperCase());
+        }
+        
+        // Forzar minúsculas en email
+        if (name === 'email') {
+            formattedValue = value.toLowerCase().trim();
+        }
 
-        const {name, value} = e.target;
         setForm({
             ...form,
-            [e.target.name]: e.target.value
+            [name]: formattedValue
         });
 
-        validateForm(name,value);
-    }
+        validateForm(name, formattedValue);
+        };
 
         const handleSubmit = async () => {
 
             Object.keys(form).forEach((key) => validateForm(key, form[key]));
 
             if (Object.keys(errors).length > 0) {
-                showAlert('Por favor corrige los errores antes de enviar.', 'error');
+                showAlert('Please correct any errors before submitting..', 'error');
                 return;
             }
 
@@ -182,7 +195,7 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
     return (
         <Modal show={show} onHide={handleClose} centered>
             <Modal.Header closeButton>
-                <Modal.Title>{mode === 'create' ? 'Crear Usuario' : 'Editar Usuario'}</Modal.Title>
+                <Modal.Title>{mode === 'create' ? 'Create users' : 'Edit users'}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <input
@@ -245,7 +258,7 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
                     onChange={handleChange}
                     className={`form-control mb-2 ${errors.positionId ? 'is-invalid': ''}`}
                 >
-                    <option value="">Seleccione una posición</option>
+                    <option value="">Select a position</option>
                     {positions.map(pos => (
                         <option key={pos.positionId} value={pos.positionId}>
                             {pos.positionName}
@@ -256,10 +269,10 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
-                    Cancelar
+                    Cancel
                 </Button>
                 <Button variant="primary" onClick={handleSubmit}>
-                    {mode === 'create' ? 'Crear' : 'Guardar cambios'}
+                    {mode === 'create' ? 'Create' : 'Save changes'}
                 </Button>
             </Modal.Footer>
         </Modal>
