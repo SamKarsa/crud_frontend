@@ -70,46 +70,46 @@ const PositionFormModal = ({ show, handleClose, positionData, onSuccess, mode })
     };
 
 
-  return (
-    <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-            <Modal.Title>{mode === 'create' ? 'Creat Position' : 'Edit Position'}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-            <input
-                name="positionName"
-                placeholder="Name"
-                value={form.positionName}
-                onChange={handleChange}
-                className="form-control mb-3"
-            />
-            {mode === 'edit' && (
-                <div className="form-check form-switch">
-                    <input
-                        name="status"
-                        type="checkbox"
-                        className="form-check-input"
-                        checked={form.status}
-                        onChange={handleChange}
-                        id="statusSwitch"
-                    />
-                    <label className="form-check-label" htmlFor="statusSwitch">
-                        {form.status ? 'Active' : 'Inactive'}
-                    </label>
-                </div>
+    return (
+        <Modal show={show} onHide={handleClose} centered>
+            <Modal.Header closeButton>
+                <Modal.Title>{mode === 'create' ? 'Creat Position' : 'Edit Position'}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <input
+                    name="positionName"
+                    placeholder="Name"
+                    value={form.positionName}
+                    onChange={handleChange}
+                    className="form-control mb-3"
+                />
+                {mode === 'edit' && (
+                    <div className="form-check form-switch">
+                        <input
+                            name="status"
+                            type="checkbox"
+                            className="form-check-input"
+                            checked={form.status}
+                            onChange={handleChange}
+                            id="statusSwitch"
+                        />
+                        <label className="form-check-label" htmlFor="statusSwitch">
+                            {form.status ? 'Active' : 'Inactive'}
+                        </label>
+                    </div>
 
-            )}
-        </Modal.Body>
-        <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-                Cancel 
-            </Button>
-            <Button variant="primary" onClick={handleSubmit}>
-                {mode === 'create' ? 'Create' : 'Save Changes'}
-            </Button>
-        </Modal.Footer>
-    </Modal>
-  )
+                )}
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Cancel 
+                </Button>
+                <Button variant="primary" onClick={handleSubmit}>
+                    {mode === 'create' ? 'Create' : 'Save Changes'}
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    )
 }
 
 export default PositionFormModal
