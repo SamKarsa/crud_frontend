@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { confirmAlert, showAlert } from '../../functions';
 import { deletePosition } from '../../functions';
+import PositionFormModal from '../positionFormModal/PositionFormModal';
+
 
 const ShowPositions = () => {
     const url = 'http://localhost:8080/api/positions';
@@ -10,6 +12,9 @@ const ShowPositions = () => {
     const [filteredPositions, setFilteredPositions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [modalMode, setModalMode] = useState('create');
+    const [selectedPosition, setSelectedPosition] = useState(null);
 
     useEffect(() => {
         getPositions();
@@ -57,9 +62,24 @@ const handleDeletePosition = async (positionid) => {
     }
 }
 
+    const handleCreate = () => {
+        setModalMode('create');
+        setSelectedPosition(null);
+        setShowModal(true);
+    }
+
+    const handleEdit = (position) => {
+        setModalMode('edit');
+        setSelectedPosition(position);
+        setShowModal(true);
+    }
+    
+    const handleClose = () => {
+        setShowModal(false);
+    }
 
     if (loading) {
-        return <div>Cargando posiciones...</div>;
+        return <div>loading...</div>;
     }
 
     if (error) {
@@ -75,7 +95,7 @@ const handleDeletePosition = async (positionid) => {
                             <h3 className="mb-1 d-flex align-items-center">
                                 <i className="bi bi-briefcase-fill me-2"></i> Positions
                             </h3>
-                            <p className="mb-0 small">All positions in the head jijiji</p>
+                            <p className="mb-0 small">All positions in a list</p>
                         </div>
                     </div>
                 </div>
@@ -98,7 +118,7 @@ const handleDeletePosition = async (positionid) => {
                         </div>
                     </div>
                     <div className="col-md-7 text-md-end">
-                        <button className={`btn btn-primary fw-semibold px-4 py-2 rounded-pill shadow-sm`}>
+                        <button onClick={handleCreate} className={`btn btn-primary fw-semibold px-4 py-2 rounded-pill shadow-sm`}>
                             <i className="bi bi-plus-lg me-2"></i> Add Position
                         </button>
                     </div>
@@ -141,7 +161,7 @@ const handleDeletePosition = async (positionid) => {
                                         </td>
                                         <td className="text-end pe-4">
                                             <div className="btn-group">
-                                                <button className="btn btn-outline-primary btn-sm rounded-start" title="Edit Position">
+                                                <button onClick={() => handleEdit(position)} className="btn btn-outline-primary btn-sm rounded-start" title="Edit Position">
                                                     <i className="bi bi-pencil-square"></i>
                                                 </button>
                                                 <button className="btn btn-outline-danger btn-sm rounded-end" title="Delete Position" onClick={() => handleDeletePosition(position.positionId)}>
@@ -205,6 +225,16 @@ const handleDeletePosition = async (positionid) => {
                     </div>
                 </div>
             </div>
+
+            {showModal && (
+                <PositionFormModal
+                    show={showModal}
+                    positionData={selectedPosition}
+                    handleClose={handleClose}
+                    onSuccess={getPositions}
+                    mode={modalMode}
+                />
+            )}
         </div>
     );
 };
