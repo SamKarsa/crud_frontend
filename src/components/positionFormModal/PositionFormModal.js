@@ -117,9 +117,8 @@ const PositionFormModal = ({ show, handleClose, positionData, onSuccess, mode })
                     placeholder="Name"
                     value={form.positionName}
                     onChange={handleChange}
-                    className={`form-control mb-3 ${errors.positionName ? 'is-invalid': ''}`}
+                    className="form-control mb-3"
                 />
-                {errors.positionName && <div className="invalid-feedback">{errors.positionName}</div>}
                 {mode === 'edit' && (
                     <div className="form-check form-switch">
                         <input
@@ -131,7 +130,7 @@ const PositionFormModal = ({ show, handleClose, positionData, onSuccess, mode })
                             id="statusSwitch"
                         />
                         <label className="form-check-label" htmlFor="statusSwitch">
-                            {form.status ? 'Active' : 'Disable'}
+                            {form.status ? 'Active' : 'Inactive'}
                         </label>
                     </div>
 
