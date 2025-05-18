@@ -7,21 +7,23 @@ import UserFormModal from '../UserFormModal/UserFormModal';
 const ShowUsers = () => {
     const url = 'http://localhost:8080/api/users';
     const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalMode, setModalMode] = useState('create');
     const [selectedUser, setSelectedUser] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages,setTotalPages] = useState(1);
 
     const hasFetched = useRef(false);
 
     useEffect(() => {
         if (hasFetched.current) return;
 
-        getUsers();
+        getUsers(currentPage);
         hasFetched.current = true;
-    }, []);
+    }, [searchTerm]);
 
     useEffect(() => {
         setFilteredUsers(
@@ -33,17 +35,24 @@ const ShowUsers = () => {
         );
     }, [searchTerm, users]);
 
-    const getUsers = async () => {
-        try {
-            const response = await axios.get(url);
-            setUsers(response.data);
-            setFilteredUsers(response.data);
-        } catch (error) {
-            showAlert('Error al cargar los usuarios', 'error');
-        } finally {
-            setLoading(false);
-        }
-    };
+        const getUsers = async (page = 1, limit = 10) => {
+            try {
+                setLoading(true);
+                const response = await axios.get(`${url}?page=${page}&limit=${limit}`);
+                
+                // Ajusta según la estructura real de tu API
+                setUsers(response.data.users || response.data.rows || []);
+                setFilteredUsers(response.data.users || response.data.rows || []);
+                setCurrentPage(response.data.currentPage || page);
+                setTotalPages(response.data.totalPages || 1);
+
+            } catch (error) {
+                console.error('Error fetching users:', error);
+                showAlert('Error fetching the users', 'error');
+            } finally {
+                setLoading(false);
+            }
+        };
 
     const handleDelete = async (id)=> {
         const confirmed = await confirmAlert('Are you sure you want to delete this user?');
@@ -51,11 +60,8 @@ const ShowUsers = () => {
         try{
             await deleteUser(id);
             showAlert('User deleted successfully', 'success');
-            getUsers();
+            await getUsers(currentPage); // o conservar la misma página
 
-            const updateUsers =users.filter(user => user.id !==id);
-            setUsers(updateUsers);
-            setFilteredUsers(updateUsers);
         
         }catch (e){
             showAlert('Error deleting user', 'error');
@@ -242,35 +248,50 @@ const ShowUsers = () => {
 
                 {/* Footer mejorado con paginación */}
                 <div className="card-footer bg-white rounded-bottom-4 p-3">
-                    <div className="row align-items-center">
-                        <div className="col-md-6">
-                            <span className="text-muted">
-                                Showing <strong>{filteredUsers.length}</strong> of <strong>{users.length}</strong> users
-                            </span>
-                        </div>
-                        <div className="col-md-6">
-                            <nav aria-label="..." className='float-md-end'>
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                        <a href="#" class="page-link  text-dark border-secondary">Previous</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link  text-dark border-dark" href="#">1</a>
-                                    </li>
-                                    <li class="page-item active">
-                                        <a class="page-link  bg-light text-dark border-dark" href="#" aria-current="page">2</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link  text-dark border-dark" href="#">3</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link  text-dark border-dark" href="#">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
+        <div className="row align-items-center">
+            <div className="col-md-6">
+                <span className="text-muted">
+                    Showing <strong>{filteredUsers.length}</strong> users on page <strong>{currentPage}</strong> of <strong>{totalPages}</strong>
+                </span>
+            </div>
+            <div className="col-md-6">
+                <nav aria-label="..." className="float-md-end">
+                    <ul className="pagination">
+                        <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
+                            <button
+                                className="page-link text-dark border-secondary"
+                                onClick={() => currentPage > 1 && getUsers(currentPage - 1)}
+                                disabled={currentPage === 1}
+                            >
+                                Previous
+                            </button>
+                        </li>
+
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                            <li key={page} className={`page-item ${currentPage === page ? 'active' : ''}`}>
+                                <button
+                                    className={`page-link ${currentPage === page ? 'bg-light text-dark border-dark' : 'text-dark border-dark'}`}
+                                    onClick={() => getUsers(page)}
+                                >
+                                    {page}
+                                </button>
+                            </li>
+                        ))}
+
+                        <li className={`page-item ${currentPage === totalPages && 'disabled'}`}>
+                            <button
+                                className="page-link text-dark border-secondary"
+                                onClick={() => currentPage < totalPages && getUsers(currentPage + 1)}
+                                disabled={currentPage === totalPages}
+                            >
+                                Next
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
             </div>
             {showModal && (
                 <UserFormModal
