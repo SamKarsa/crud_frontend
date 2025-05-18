@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { confirmAlert, showAlert } from '../../functions';
-import { deletePosition } from '../../functions';
+import { confirmAlert, showAlert, deletePosition } from '../../functions';
 import PositionFormModal from '../positionFormModal/PositionFormModal';
 import styles from '../showUsers/ShowUsers.module.css'
 

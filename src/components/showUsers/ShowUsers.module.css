@@ -32,13 +32,13 @@ border: none;
 /* Agrega estas clases a tu archivo CSS Module */
 .ActiveStatus {
   background-color: rgba(29, 151, 35, 0.1);
-  color: #026873;
+  color: #026873 !important;
   border: 1px solid #026873;
 }
 
 .DisableStatus {
   background-color: rgba(220, 53, 69, 0.1);
-  color: #dc3545;
+  color: #dc3545 !important;
   border: 1px solid #dc3545;
 }
 
@@ -61,13 +61,13 @@ border: none;
 /* Posición normal - Gris neutro */
 .defaultPosition {
   background-color: #e9ecef;
-  color: #495057;
+  color: #495057 !important;
   border: 1px solid #dee2e6;
 }
 
 /* Posición inactiva - Rojo suave */
 .inactivePosition {
   background-color: rgba(220, 53, 69, 0.1);
-  color: #dc3545;
+  color: #dc3545 !important;
   border: 1px solid rgba(220, 53, 69, 0.3);
 }
