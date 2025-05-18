@@ -71,3 +71,50 @@ border: none;
   color: #dc3545 !important;
   border: 1px solid rgba(220, 53, 69, 0.3);
 }
+
+
+/* Estilos para la paginación */
+.pagination {
+    margin-bottom: 0;
+}
+
+.pageLink {
+    color: #495057;
+    border: 1px solid #dee2e6;
+    padding: 0.375rem 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.pageLink:hover {
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+.pageLink:focus {
+    box-shadow: none;
+}
+
+/* Estilo para botones Previous y Next */
+.navButton {
+    background-color: #2D818B; /* Gris melo */
+    color: white !important;
+    border-color: #6c757d;
+}
+
+.navButton:hover {
+    background-color: #026873;
+    border-color: #2D818B;
+}
+
+.navButton:disabled {
+    background-color: #e7eaec;
+    border-color: #d3d9df;
+    color: rgb(175, 175, 175) !important;
+}
+
+/* Estilo para página activa */
+.activePage .pageLink {
+    background-color: #2D818B !important;
+    border-color: #026873 !important;
+    color: white !important;
+}

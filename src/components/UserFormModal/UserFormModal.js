@@ -41,24 +41,45 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
     }, [mode, userData]);
 
 
-        const hasFetched = useRef(false);
-
         useEffect(() => {
-            if (hasFetched.current) return; // Si ya se ejecutó, no vuelvas a hacerlo
-            hasFetched.current = true; // Marca como ejecutado
-
             const fetchPositions = async () => {
                 try {
-                    const response = await axios.get('http://localhost:8080/api/positions');
-                    const activePositions = response.data.filter(position => position.status === true);
+                    const response = await axios.get('http://localhost:8080/api/positions/all');
+                    
+                    // Verifica la estructura de la respuesta
+                    console.log('API Response:', response.data);
+                    
+                    // Asegúrate de manejar diferentes estructuras de respuesta
+                    let receivedPositions = response.data;
+                    
+                    // Si la respuesta tiene un campo 'data' (común en Axios)
+                    if (response.data && response.data.data) {
+                        receivedPositions = response.data.data;
+                    }
+                    
+                    // Filtra solo posiciones activas y mapea correctamente
+                    const activePositions = receivedPositions
+                        .filter(position => position.status === true)
+                        .map(position => ({
+                            positionId: position.id || position.positionId, // Asegura compatibilidad
+                            positionName: position.positionName,
+                            status: position.status
+                        }));
+                        
+                    console.log('Processed Positions:', activePositions);
                     setPositions(activePositions);
+                    
                 } catch (error) {
-                    showAlert('Error al cargar los roles', 'error');
+                    console.error('Error fetching positions:', error);
+                    showAlert('Error loading positions: ' + error.message, 'error');
                 }
             };
 
-            fetchPositions();
-        }, []);
+            // Solo ejecuta si el modal está abierto
+            if (show) {
+                fetchPositions();
+            }
+        }, [show]); // Dependencia de show en lugar de useRef
 
 
     const [errors, setErrors] = useState({});

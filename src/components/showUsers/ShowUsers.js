@@ -248,50 +248,56 @@ const ShowUsers = () => {
 
                 {/* Footer mejorado con paginación */}
                 <div className="card-footer bg-white rounded-bottom-4 p-3">
-        <div className="row align-items-center">
-            <div className="col-md-6">
-                <span className="text-muted">
-                    Showing <strong>{filteredUsers.length}</strong> users on page <strong>{currentPage}</strong> of <strong>{totalPages}</strong>
-                </span>
-            </div>
-            <div className="col-md-6">
-                <nav aria-label="..." className="float-md-end">
-                    <ul className="pagination">
-                        <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
-                            <button
-                                className="page-link text-dark border-secondary"
-                                onClick={() => currentPage > 1 && getUsers(currentPage - 1)}
-                                disabled={currentPage === 1}
-                            >
-                                Previous
-                            </button>
-                        </li>
+                    <div className="row align-items-center">
+                        <div className="col-md-6">
+                            <span className="text-muted">
+                                Showing <strong>{filteredUsers.length}</strong> users on page <strong>{currentPage}</strong> of <strong>{totalPages}</strong>
+                            </span>
+                        </div>
+                        <div className="col-md-6">
+                            <nav aria-label="..." className="float-md-end">
+                                <ul className="pagination">
+                                    {/* Botón Previous */}
+                                    <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
+                                        <button
+                                            className={`page-link navButton ${styles.navButton}`}
+                                            onClick={() => currentPage > 1 && getUsers(currentPage - 1)}
+                                            disabled={currentPage === 1}
+                                        >
+                                            Previous
+                                        </button>
+                                    </li>
 
-                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                            <li key={page} className={`page-item ${currentPage === page ? 'active' : ''}`}>
-                                <button
-                                    className={`page-link ${currentPage === page ? 'bg-light text-dark border-dark' : 'text-dark border-dark'}`}
-                                    onClick={() => getUsers(page)}
-                                >
-                                    {page}
-                                </button>
-                            </li>
-                        ))}
+                                    {/* Botones de página */}
+                                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                                        <li 
+                                            key={page} 
+                                            className={`page-item ${currentPage === page ? `active ${styles.activePage}` : ''}`}
+                                        >
+                                            <button
+                                                className={`page-link ${styles.pageLink}`}
+                                                onClick={() => getUsers(page)}
+                                            >
+                                                {page}
+                                            </button>
+                                        </li>
+                                    ))}
 
-                        <li className={`page-item ${currentPage === totalPages && 'disabled'}`}>
-                            <button
-                                className="page-link text-dark border-secondary"
-                                onClick={() => currentPage < totalPages && getUsers(currentPage + 1)}
-                                disabled={currentPage === totalPages}
-                            >
-                                Next
-                            </button>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
+                                    {/* Botón Next */}
+                                    <li className={`page-item ${currentPage === totalPages && 'disabled'}`}>
+                                        <button
+                                            className={`page-link navButton ${styles.navButton}`}
+                                            onClick={() => currentPage < totalPages && getUsers(currentPage + 1)}
+                                            disabled={currentPage === totalPages}
+                                        >
+                                            Next
+                                        </button>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
             </div>
             {showModal && (
                 <UserFormModal

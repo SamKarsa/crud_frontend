@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { confirmAlert, showAlert } from '../../functions';
 import { deletePosition } from '../../functions';
@@ -11,15 +11,23 @@ const ShowPositions = () => {
     const [positions, setPositions] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredPositions, setFilteredPositions] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [modalMode, setModalMode] = useState('create');
     const [selectedPosition, setSelectedPosition] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages,setTotalPages] = useState(1);
+
+    const hasFetched=useRef(false);
 
     useEffect(() => {
-        getPositions();
-    }, []);
+        if (hasFetched.current) return;
+
+
+        getPositions(currentPage);
+        hasFetched.current=true;
+    }, [searchTerm]);
 
     useEffect(() => {
         setFilteredPositions(
@@ -30,16 +38,23 @@ const ShowPositions = () => {
         );
     }, [searchTerm, positions]);
 
-    const getPositions = async () => {
+    const getPositions = async (page = 1, limit = 10 ) => {
         try {
-            const response = await axios.get(url);
-            setPositions(response.data);
-            setFilteredPositions(response.data);
-            setLoading(false);
-        } catch (err) {
-            setError(err.message);
-            setLoading(false);
-            console.error('Error fetching positions:', err);
+            setLoading(true);
+
+            const response = await axios.get(`${url}?page=${page}&limit=${limit}`);
+
+
+            setPositions(response.data.positions || response.data.rows || []);
+            setFilteredPositions(response.data.positions || response.data.rows || []);
+            setCurrentPage(response.data.currentPage || page);
+            setTotalPages(response.data.totalPages || 1 );
+
+        } catch (error) {
+                console.error('Error fetching positions:', error);
+                showAlert('Error fetching the positions', 'error');
+        } finally {
+                setLoading(false);
         }
     };
 
@@ -53,10 +68,8 @@ const ShowPositions = () => {
         showAlert('Position deleted succesfully', 'success');
         getPositions();
         //Actualizar el estado
+        await getPositions(currentPage);
 
-        const updatedPositions = positions.filter(position => position.positionid !== positionid);
-        setPositions(updatedPositions);
-        setFilteredPositions(updatedPositions);
     } catch (e) {
         showAlert('Error deleting position', 'error');
         console.error('Delete error;', e);
@@ -195,36 +208,57 @@ const ShowPositions = () => {
                     </table>
                 </div>
             </div>
-            <div className="card-footer bg-white rounded-bottom-4 p-3">
-                <div className="row align-items-center">
-                    <div className="col-md-6">
-                        <span className="text-muted">
-                            Showing <strong>{filteredPositions.length}</strong> of <strong>{positions.length}</strong> positions
-                        </span>
+                    <div className="card-footer bg-white rounded-bottom-4 p-3">
+                        <div className="row align-items-center">
+                            <div className="col-md-6">
+                                <span className="text-muted">
+                                    Showing <strong>{filteredPositions.length}</strong> positions on page <strong>{currentPage}</strong> of <strong>{totalPages}</strong>
+                                </span>
+                            </div>
+                            <div className="col-md-6">
+                                <nav aria-label="..." className="float-md-end">
+                                    <ul className="pagination">
+                                        {/* Botón Previous */}
+                                        <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
+                                            <button
+                                                className={`page-link navButton ${styles.navButton}`}
+                                                onClick={() => currentPage > 1 && getPositions(currentPage - 1)}
+                                                disabled={currentPage === 1}
+                                            >
+                                                Previous
+                                            </button>
+                                        </li>
+    
+                                        {/* Botones de página */}
+                                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                                            <li 
+                                                key={page} 
+                                                className={`page-item ${currentPage === page ? `active ${styles.activePage}` : ''}`}
+                                            >
+                                                <button
+                                                    className={`page-link ${styles.pageLink}`}
+                                                    onClick={() => getPositions(page)}
+                                                >
+                                                    {page}
+                                                </button>
+                                            </li>
+                                        ))}
+    
+                                        {/* Botón Next */}
+                                        <li className={`page-item ${currentPage === totalPages && 'disabled'}`}>
+                                            <button
+                                                className={`page-link navButton ${styles.navButton}`}
+                                                onClick={() => currentPage < totalPages && getPositions(currentPage + 1)}
+                                                disabled={currentPage === totalPages}
+                                            >
+                                                Next
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
                     </div>
-                    <div className="col-md-6">
-                        <nav aria-label="Page navigation" className="float-md-end">
-                            <ul className="pagination pagination-sm mb-0">
-                                <li className="page-item disabled">
-                                    <span className="page-link">Previous</span>
-                                </li>
-                                <li className="page-item active">
-                                    <span className="page-link">1</span>
-                                </li>
-                                <li className="page-item">
-                                    <span className="page-link" href="#">2</span>
-                                </li>
-                                <li className="page-item">
-                                    <span className="page-link" href="#">3</span>
-                                </li>
-                                <li className="page-item">
-                                    <span className="page-link" href="#">Next</span>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
 
             {showModal && (
                 <PositionFormModal
