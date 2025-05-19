@@ -22,7 +22,7 @@ const setupAxiosInterceptors = () => {
   axios.interceptors.response.use(
     (response) => {
       return response;
-    },
+    }/*,
     (error) => {
       if (error.response && error.response.status === 401) {
         // Token inválido o expirado
@@ -30,7 +30,7 @@ const setupAxiosInterceptors = () => {
         window.location.href = '/login';
       }
       return Promise.reject(error);
-    }
+    }*/
   );
 };
 

@@ -4,7 +4,6 @@ import Showusers from './components/showUsers/ShowUsers';
 import Header from './components/header/Header';
 import ShowPositions from './components/showPositions/ShowPositions';
 import Login from './components/login/Login';
-import Unauthorized from './components/unauthorized/Unauthorized';
 import ProtectedRoute from './components/routes/ProtectedRoute';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AuthService from './services/AuthService';
@@ -22,9 +21,6 @@ const Layout = () => {
       <Routes>
         {/* Ruta pública de login */}
         <Route path="/login" element={<Login />} />
-        
-        {/* Página de acceso no autorizado */}
-        <Route path="/unauthorized" element={<Unauthorized />} />
         
         {/* Rutas protegidas para cualquier usuario autenticado */}
         <Route element={<ProtectedRoute />}>

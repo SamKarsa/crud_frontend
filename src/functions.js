@@ -17,7 +17,7 @@ axios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
+/*
 // Interceptor para manejar errores 401 (token inválido o expirado)
 axios.interceptors.response.use(
   (response) => {
@@ -32,7 +32,7 @@ axios.interceptors.response.use(
     }
     return Promise.reject(error);
   }
-);
+);*/
 
 // Función modificada para devolver una promesa y controlar el cierre de la alerta
 export function showAlert(message, icon, focus = '') {
