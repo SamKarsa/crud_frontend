@@ -2,7 +2,37 @@ import swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import axios from 'axios';
 
+import AuthService from './services/AuthService';
 
+// Configurar axios para incluir automáticamente el token en las solicitudes
+axios.interceptors.request.use(
+  (config) => {
+    const token = AuthService.getToken();
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Interceptor para manejar errores 401 (token inválido o expirado)
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      // Token inválido o expirado
+      AuthService.logout();
+      window.location.href = '/login';
+      showAlert('Sesión expirada. Por favor inicia sesión nuevamente.', 'warning');
+    }
+    return Promise.reject(error);
+  }
+);
 
 export function showAlert(message,icon,focus=''){
     onfocus(focus);

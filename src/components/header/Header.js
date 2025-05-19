@@ -1,8 +1,20 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styles from './Header.module.css'
 
+
 const Header = () => {
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Lógica adicional antes de navegar (opcional)
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userData');
+    
+    // Navegar a la ruta deseada
+    navigate('/login');
+  };
   return (
     <header>
       <nav className={`${styles.nav} navbar navbar-expand-lg navbar-dark shadow-sm`}>
@@ -52,8 +64,12 @@ const Header = () => {
               <ul className="dropdown-menu dropdown-menu-end">
                 <li className="dropdown-item-text fw-bold text-center">Admin</li>
                 <li><hr className="dropdown-divider"/></li>
-                <li><button className="dropdown-item text-danger">Log Out</button></li>
-              </ul>
+                              <li>
+                <button className="dropdown-item text-danger" onClick={handleLogout} >
+                  Cerrar sesión
+                </button>
+              </li>
+                </ul>
             </div>
           </div>
         </div>
