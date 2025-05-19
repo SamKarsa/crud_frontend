@@ -20,11 +20,14 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    
+    if (loading) return; 
+    
     setLoading(true);
     
     // Validación básica
     if (!email || !password) {
-      showAlert('Por favor ingresa email y contraseña', 'error');
+      showAlert('Please enter email and password', 'error');
       setLoading(false);
       return;
     }
@@ -41,13 +44,15 @@ const Login = () => {
         // Verificar permisos antes de guardar datos
         const userPosition = response.data.data.position;
         
-        if (!['admin', 'supervisor'].includes(userPosition)) {
+        // Verificar si la posición es un objeto o un string
+        const positionName = typeof userPosition === 'object' 
+          ? userPosition.positionName.toLowerCase() 
+          : userPosition.toLowerCase();
+        
+        if (!['admin', 'supervisor'].includes(positionName)) {
           // Si no tiene permisos, mostrar alerta y NO guardar credenciales
-          showAlert('Permisos insuficientes. Se requiere posición de admin o supervisor.', 'warning');
-          // Añadir un tiempo de espera para que la alerta sea visible
-          setTimeout(() => {
-            setLoading(false);
-          }, 2000);
+          await showAlert('Permisos insuficientes. Se requiere posición de admin o supervisor.', 'warning');
+          setLoading(false);
           return;
         }
         
@@ -64,24 +69,22 @@ const Login = () => {
         
         localStorage.setItem('userData', JSON.stringify(userData));
         
-        showAlert('Inicio de sesión exitoso', 'success');
         
-        // Pequeño retraso para que la alerta sea visible
-        setTimeout(() => {
-          navigate('/', { replace: true });
-        }, 1000);
+        // Navegar a la página principal
+        navigate('/', { replace: true });
       }
     } catch (error) {
       console.error('Error durante el login:', error);
       
       // Manejo de errores específicos
       if (error.response) {
-        showAlert(error.response.data.message || 'Error al iniciar sesión', 'error');
+        await showAlert(error.response.data.message || 'Error al iniciar sesión', 'error');
       } else if (error.request) {
-        showAlert('No se pudo conectar con el servidor', 'error');
+        await showAlert('No se pudo conectar con el servidor', 'error');
       } else {
-        showAlert('Error inesperado, por favor intenta de nuevo', 'error');
+        await showAlert('Error inesperado, por favor intenta de nuevo', 'error');
       }
+    } finally {
       setLoading(false);
     }
   };
@@ -98,7 +101,7 @@ const Login = () => {
                   <p className="text-muted">Ingresa a tu cuenta</p>
                 </div>
                 
-                <form onSubmit={handleLogin}>
+                <form onSubmit={handleLogin} noValidate>
                   <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email</label>
                     <div className="input-group">

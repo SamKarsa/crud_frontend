@@ -34,51 +34,56 @@ axios.interceptors.response.use(
   }
 );
 
-export function showAlert(message,icon,focus=''){
-    onfocus(focus);
-    const Myswal = withReactContent(swal);
-    Myswal.fire({
-        title:message,
-        icon:icon,
-    })
+// Función modificada para devolver una promesa y controlar el cierre de la alerta
+export function showAlert(message, icon, focus = '') {
+  onfocus(focus);
+  const MySwal = withReactContent(swal);
+  
+  return MySwal.fire({
+    title: message,
+    icon: icon,
+    confirmButtonText: 'Aceptar',
+    allowOutsideClick: false,
+    allowEscapeKey: false
+  });
 }
 
-export async function confirmAlert(message){
-    const result = await swal.fire({
-        title: message,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'Cancel',
-    })
-    return result.isConfirmed;
+export async function confirmAlert(message) {
+  const result = await swal.fire({
+    title: message,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes',
+    cancelButtonText: 'Cancel',
+    allowOutsideClick: false
+  });
+  return result.isConfirmed;
 }
 
-function onfocus(focus){
-    if(focus !== ''){
-        document.getElementById(focus).focus();
-    }
+function onfocus(focus) {
+  if (focus !== '') {
+    document.getElementById(focus).focus();
+  }
 }
 
+const delete_url = 'http://localhost:8080/api/users';
 
-const delete_url='http://localhost:8080/api/users';
-
-export async  function deleteUser(id){
-    try {
-        const response = await axios.delete(`${delete_url}/${id}`);
-        return response.data;
-    }catch (e) {
-        throw new Error('Error deleting user:' + e.message)
-    }
+export async function deleteUser(id) {
+  try {
+    const response = await axios.delete(`${delete_url}/${id}`);
+    return response.data;
+  } catch (e) {
+    throw new Error('Error deleting user:' + e.message);
+  }
 }
 
 const deletePosition_url = 'http://localhost:8080/api/positions';
 
-export async function deletePosition(id){
-    try{
-        const response = await axios.delete(`${deletePosition_url}/${id}`);
-            return response.data;
-    }catch (e) {
-        throw new Error('Error delete position: ' + e.message);
-    }
+export async function deletePosition(id) {
+  try {
+    const response = await axios.delete(`${deletePosition_url}/${id}`);
+    return response.data;
+  } catch (e) {
+    throw new Error('Error delete position: ' + e.message);
+  }
 }

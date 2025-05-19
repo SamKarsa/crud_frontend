@@ -1,3 +1,4 @@
+// Archivo: src/services/AuthService.js
 import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/api';
@@ -77,13 +78,22 @@ const getCurrentUser = () => {
   return userData ? JSON.parse(userData) : null;
 };
 
-// Función para verificar si el usuario tiene un rol específico
+// Función corregida para verificar si el usuario tiene un rol específico
 const hasRole = (requiredRoles) => {
   const user = getCurrentUser();
   if (!user || !user.position) return false;
   
-  const userRole = user.position.positionName.toLowerCase();
-  return requiredRoles.map(role => role.toLowerCase()).includes(userRole);
+  // Verificar estructura correcta del objeto position
+  if (typeof user.position === 'object' && user.position.positionName) {
+    const userRole = user.position.positionName.toLowerCase();
+    return requiredRoles.map(role => role.toLowerCase()).includes(userRole);
+  } else if (typeof user.position === 'string') {
+    // Si position es un string (como parece estar guardado en el login)
+    const userRole = user.position.toLowerCase();
+    return requiredRoles.map(role => role.toLowerCase()).includes(userRole);
+  }
+  
+  return false;
 };
 
 // Inicializar interceptores cuando se importe este servicio
