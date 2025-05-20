@@ -1,70 +1,72 @@
-# Getting Started with Create React App
+# User CRUD - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este es el frontend del sistema CRUD de usuarios y posiciones desarrollado como parte del proyecto de Ingeniería de Software II.
 
-## Available Scripts
+## 🚀 Descripción
 
-In the project directory, you can run:
+El sistema permite gestionar usuarios y sus posiciones dentro de una empresa. Solo usuarios autenticados con roles de **admin** o **supervisor** pueden acceder al sistema.
 
-### `npm start`
+⚠️ **Nota:** Es necesario tener el backend corriendo previamente para que el frontend funcione correctamente y pueda comunicarse con la API.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Funcionalidades:
+- Autenticación con login para roles específicos.
+- Vista de todos los usuarios con filtros.
+- Vista de todas las posiciones con filtros.
+- Creación, actualización, eliminación y visualización de registros.
+- Cambio de estado y edición de atributos como nombre, correo y posición.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🧰 Tecnologías utilizadas
 
-### `npm run build`
+- React
+- Bootstrap
+- SweetAlert
+- Axios
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 📦 Instalación
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Clona el repositorio:
 
-### `npm run eject`
+```bash
+https://github.com/SamKarsa/UdeAEmprende_frontend.git
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. Navega al proyecto y descarga las dependencias:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+cd UdeA_Emprende_frontend
+npm install
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. Ejecuta la aplicación en desarrollo:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+npm start
+```
 
-## Learn More
+4. Abre tu navegador en: http://localhost:3000/auth/login
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## ⚙️ Configuración
 
-### Code Splitting
+No se requiere configuración adicional más allá de tener instalado Node.js. El proyecto está listo para ejecutarse localmente después de instalar los módulos.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## 👥 Autores
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- [**Samuel López Marín**](https://github.com/SamKarsa)
+- [**Jarol Stiben Paria Ramírez**](https://github.com/JarolParia)
+- [**Karen Daniela Garzón Morales**](https://github.com/Karencita777)
 
-### Making a Progressive Web App
+Ambos desarrolladores participaron activamente en el diseño y desarrollo del **frontend** y **backend** del sistema Emprende UdeA.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
