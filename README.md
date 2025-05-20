@@ -67,7 +67,7 @@ No se requiere configuración adicional más allá de tener instalado Node.js. E
 - [**Jarol Stiben Paria Ramírez**](https://github.com/JarolParia)
 - [**Karen Daniela Garzón Morales**](https://github.com/Karencita777)
 
-Ambos desarrolladores participaron activamente en el diseño y desarrollo del **frontend** y **backend** del sistema Emprende UdeA.
+Todos los desarrolladores participaron activamente en el diseño y desarrollo del **frontend** y **backend** del sistema User CRUD
 
 
 
