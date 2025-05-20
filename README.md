@@ -39,7 +39,7 @@ https://github.com/SamKarsa/user-crud-frontend.git
 2. Navega al proyecto y descarga las dependencias:
 
 ```bash
-cd UdeA_Emprende_frontend
+cd user-crud-frontend
 npm install
 ```
 
