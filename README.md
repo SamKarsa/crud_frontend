@@ -49,7 +49,7 @@ npm install
 npm start
 ```
 
-4. Abre tu navegador en: http://localhost:3000/auth/login
+4. Abre tu navegador en: http://localhost:3000
 
 ---
 
