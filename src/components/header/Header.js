@@ -8,7 +8,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   const userData = JSON.parse(localStorage.getItem('userData'));
-  const positionName = userData?.position?.positionName || userData?.positionName || 'Usuario';
+  const positionName = userData?.position?.positionName || userData?.positionName || 'User';
 
   const handleLogout = () => {
     // Lógica adicional antes de navegar (opcional)
@@ -64,11 +64,11 @@ const Header = () => {
                   <i className={`${styles.profileSymbol} bi bi-person-fill fs-3`}></i>
                 </div>
               </button>
-              <ul className="dropdown-menu dropdown-menu-end">
+              <ul className={`dropdown-menu dropdown-menu-end ${styles.dropdownMenu}`}>
                 <li className="dropdown-item-text fw-bold text-center">{positionName}</li>
                 <li><hr className="dropdown-divider"/></li>
                               <li>
-                <button className="dropdown-item text-danger" onClick={handleLogout} > Logout
+                <button className={`dropdown-item ${styles.logoutButton}`}  onClick={handleLogout} > Logout
                 </button>
               </li>
                 </ul>

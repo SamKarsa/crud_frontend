@@ -51,7 +51,7 @@ const Login = () => {
         
         if (!['admin', 'supervisor'].includes(positionName)) {
           // Si no tiene permisos, mostrar alerta y NO guardar credenciales
-          await showAlert('Permisos insuficientes. Se requiere posición de admin o supervisor.', 'warning');
+          await showAlert('Insufficient permissions.', 'warning');
           setLoading(false);
           return;
         }
@@ -137,7 +137,7 @@ const Login = () => {
                 >
                   {loading ? (
                     <>
-                      <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> loading...
+                      <span className="spinner-border spinner-border-sm me-2" aria-hidden="true"></span> loading...
                     </>
                   ) : 'Log In'}
                 </button>

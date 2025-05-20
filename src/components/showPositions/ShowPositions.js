@@ -11,7 +11,6 @@ const ShowPositions = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredPositions, setFilteredPositions] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [modalMode, setModalMode] = useState('create');
     const [selectedPosition, setSelectedPosition] = useState(null);
@@ -26,7 +25,7 @@ const ShowPositions = () => {
 
         getPositions(currentPage);
         hasFetched.current=true;
-    }, [searchTerm]);
+    }, [searchTerm, currentPage]);
 
     useEffect(() => {
         setFilteredPositions(
@@ -92,12 +91,9 @@ const ShowPositions = () => {
     }
 
     if (loading) {
-        return <div>loading...</div>;
+        return <div>Loading...</div>;
     }
 
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
 
     return (    
         <div className="container-fluid px-3 py-3">
@@ -232,7 +228,7 @@ const ShowPositions = () => {
                                         {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                                             <li 
                                                 key={page} 
-                                                className={`page-item ${currentPage === page ? `active ${styles.activePage}` : ''}`}
+                                                className={`page-item${currentPage === page ? ' active ' + styles.activePage : ''}`}
                                             >
                                                 <button
                                                     className={`page-link ${styles.pageLink}`}

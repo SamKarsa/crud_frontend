@@ -97,24 +97,24 @@ body {
 
 /* Botón de login */
 .btn-login {
-  background: linear-gradient(to right, var(--primary-color), var(--primary-light));
-  border: none;
-  color: white;
-  font-weight: 500;
-  padding: 0.8rem;
-  border-radius: 10px;
-  transition: all 0.3s;
-  font-size: 1.1rem;
-  letter-spacing: 0.5px;
-  margin-top: 0.5rem;
-  box-shadow: 0 4px 6px var(--shadow-color);
+  background: linear-gradient(to right, var(--primary-color), var(--primary-light)) ;
+  border: none !important;
+  color: white !important;
+  font-weight: 500 !important;
+  padding: 0.8rem !important;
+  border-radius: 10px !important;
+  transition: all 0.3s !important;
+  font-size: 1.1rem !important;
+  letter-spacing: 0.5px !important;
+  margin-top: 0.5rem !important;
+  box-shadow: 0 4px 6px var(--shadow-color) !important;
 }
 
 .btn-login:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 12px var(--shadow-color);
   background: linear-gradient(to right, var(--primary-dark), var(--primary-color));
-  color: #dfdfdf;
+  color: #fff;
 }
 
 .btn-login:active {
