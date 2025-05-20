@@ -2,6 +2,8 @@
 
 Este es el frontend del sistema CRUD de usuarios y posiciones desarrollado como parte del proyecto de Ingeniería de Software II.
 
+👉 Repositorio del backend: [User CRUD](https://github.com/JarolParia/CRUD.git)
+
 ## 🚀 Descripción
 
 El sistema permite gestionar usuarios y sus posiciones dentro de una empresa. Solo usuarios autenticados con roles de **admin** o **supervisor** pueden acceder al sistema.
