@@ -33,7 +33,7 @@ El sistema permite gestionar usuarios y sus posiciones dentro de una empresa. So
 1. Clona el repositorio:
 
 ```bash
-https://github.com/SamKarsa/UdeAEmprende_frontend.git
+https://github.com/SamKarsa/user-crud-frontend.git
 ```
 
 2. Navega al proyecto y descarga las dependencias:
