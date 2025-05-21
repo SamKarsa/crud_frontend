@@ -24,7 +24,7 @@ const Header = () => {
   };
   return (
     <header>
-      //Bootstrap navbar with custom styles applied
+      {/*Bootstrap navbar with custom styles applied*/}
       <nav className={`${styles.nav} navbar navbar-expand-lg navbar-dark shadow-sm`}>
         <div className="container-fluid">
 
@@ -40,43 +40,43 @@ const Header = () => {
             data-bs-toggle="collapse" 
             data-bs-target="#navbarContent"
             aria-controls="navbarContent">
-            <span className="navbar-toggler-icon"></span> //Bootstrap hamburger icon
+            <span className="navbar-toggler-icon"></span>
           </button>
 
           {/* Collapsible content: navigation links and user menu */}
           <div className="collapse navbar-collapse justify-content-end px-4" id="navbarContent">
-            //Navigation links section aligned to the right 
+            {/*Navigation links section aligned to the right */}
             <ul className="navbar-nav me-4 mb-2 mb-lg-0">
-              //Navigation link to Users page 
+              {/*Navigation link to Users page */}
               <li className="nav-item">
                 <Link className="nav-link fs-5" to="/">
-                  <i className="bi bi-people-fill me-2"></i>Users //Bootstrap icon
+                  <i className="bi bi-people-fill me-2"></i>Users
                 </Link>
               </li>
-              //Navigation link to Positions page
+              {/*Navigation link to Positions page*/}
               <li className="nav-item">
                 <Link className="nav-link fs-5" to="/positions">
-                  <i className="bi bi-briefcase-fill me-2"></i>Positions //Bootstrap icon
+                  <i className="bi bi-briefcase-fill me-2"></i>Positions
                 </Link>
               </li>
             </ul>
 
             {/* User profile dropdown (right side of navbar) */}
             <div className="dropdown">
-              //Profile icon button that toggles the dropdown menu
+              {/*Profile icon button that toggles the dropdown menu*/}
               <button 
                 className="btn btn-link p-1 rounded-circle" 
                 type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false">
-                //Circle background with user icon inside
+                {/*Circle background with user icon inside*/}
                 <div className={`${styles.profileCircle} d-flex align-items-center justify-content-center bg-light rounded-circle`}>
                   <i className={`${styles.profileSymbol} bi bi-person-fill fs-3`}></i>
                 </div>
               </button>
-              //Dropdown menu shown when user clicks the profile icon
+              {/*Dropdown menu shown when user clicks the profile icon*/}
               <ul className={`dropdown-menu dropdown-menu-end ${styles.dropdownMenu}`}>
-                //Display the user's role/position name in bold
+                {/*Display the user's role/position name in bold*/}
                 <li className="dropdown-item-text fw-bold text-center">{positionName}</li>
                 <li><hr className="dropdown-divider"/></li>
                               <li>

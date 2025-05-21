@@ -166,7 +166,7 @@ const ShowUsers = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                //Conditional rendering based on whether ussers exist
+                                {/*Conditional rendering based on whether ussers exist*/}
                                 {filteredUsers.length > 0 ? (
                                     filteredUsers.map(user => (
                                         <tr key={user.id}>
@@ -197,7 +197,7 @@ const ShowUsers = () => {
                                                 </span>
                                             </td>
                                             <td>
-                                                /Dinamic badge styling based on user position
+                                                {/*Dinamic badge styling based on user position*/}
                                             <span className={`badge rounded-pill px-3 py-2 ${
                                                 !user.position || !user.position.status 
                                                 ? styles.inactivePosition 
@@ -310,7 +310,7 @@ const ShowUsers = () => {
                     </div>
                 </div>
             </div>
-            //Conditionally render the user form modal
+                {/*Conditionally render the user form modal*/}
             {showModal && (
                 <UserFormModal
                     show={showModal}

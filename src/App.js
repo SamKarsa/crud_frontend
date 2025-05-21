@@ -18,7 +18,7 @@ const Layout = () => {
     <>
       {/* Conditionally render Header - hidden on login page */}
       {!isLoginPage && <Header />}
-      // Main application routes
+      {/*Main Application routes*/}
       <Routes>
         {/* Public route - Login page  */}
         <Route path="/login" element={<Login />} />

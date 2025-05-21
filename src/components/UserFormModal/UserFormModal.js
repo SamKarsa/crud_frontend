@@ -263,7 +263,7 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
                     className={`form-control mb-2 ${errors.email ? 'is-invalid': ''}`}
                 />
                 {errors.email && <div className="invalid-feedback">{errors.email}</div>}
-                //Phone Input
+                {/*Phone Input*/}
                 <input
                     name="phone"
                     placeholder="Phone"
@@ -294,7 +294,7 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
                         {errors.password && <div className="invalid-feedback">{errors.password}</div>}
                     </>
                 )}
-                //Position Dropdown
+                {/*Position Dropdown*/}
                 <select
                     name="positionId"
                     value={form.positionId}

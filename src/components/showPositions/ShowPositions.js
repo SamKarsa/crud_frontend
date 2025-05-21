@@ -264,7 +264,7 @@ const ShowPositions = () => {
                         </div>
                     </div>
 
-            //CREATE/EDIT MODAL
+            {/*CREATE/EDIT MODAL*/}
             {showModal && (
                 <PositionFormModal
                     show={showModal}
