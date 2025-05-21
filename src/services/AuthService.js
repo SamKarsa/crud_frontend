@@ -1,24 +1,26 @@
-// Archivo: src/services/AuthService.js
+// File: src/services/AuthService.js
 import axios from 'axios';
 
+//Base API URL - should ideally be configured through enviroment variables
 const API_URL = 'http://localhost:8080/api';
 
-// Configurar interceptor para agregar token a todas las peticiones
+// Configure axios interceptors to automatically handle authentication
 const setupAxiosInterceptors = () => {
+  // Request interceptor to attach token to all outgoing requests
   axios.interceptors.request.use(
     (config) => {
       const token = localStorage.getItem('authToken');
       if (token) {
-        config.headers['Authorization'] = `Bearer ${token}`;
+        config.headers['Authorization'] = `Bearer ${token}`; // Add Bearer token to headers
       }
       return config;
     },
     (error) => {
-      return Promise.reject(error);
+      return Promise.reject(error); // Pass through any request errors
     }
   );
 
-  // Interceptor para manejar errores de respuesta (como token expirado)
+  //  Response interceptor (currently commented out)
   axios.interceptors.response.use(
     (response) => {
       return response;
@@ -34,61 +36,62 @@ const setupAxiosInterceptors = () => {
   );
 };
 
-// Función para iniciar sesión
+// Login function - authenticates user and stores token/user data
 const login = async (email, password) => {
   try {
     const response = await axios.post(`${API_URL}/auth/login`, { email, password });
     if (response.data.success) {
+      // Store authentication data in localStorage
       localStorage.setItem('authToken', response.data.data.token);
       localStorage.setItem('userData', JSON.stringify({
         id: response.data.data.id,
         firstName: response.data.data.firstName,
         lastName: response.data.data.lastName,
         email: response.data.data.email,
-        position: response.data.data.position
+        position: response.data.data.position // Can be object or string
       }));
+      // Initialize axios interceptors
       setupAxiosInterceptors();
       return response.data;
     }
     return null;
   } catch (error) {
-    throw error;
+    throw error; // Re-throw for error handling in components
   }
 };
 
-// Función para cerrar sesión
+// Logout function - clears authentication data
 const logout = () => {
   localStorage.removeItem('authToken');
   localStorage.removeItem('userData');
+  //Note: Could add redirect to login page here if needed
 };
 
-// Función para verificar si el usuario está autenticado
+// Checks if user is authenticated
 const isAuthenticated = () => {
-  return !!localStorage.getItem('authToken');
+  return !!localStorage.getItem('authToken'); // Double negation converts to boolean
 };
 
-// Función para obtener el token
+// Gets the stored authentication token
 const getToken = () => {
   return localStorage.getItem('authToken');
 };
 
-// Función para obtener información del usuario autenticado
+// Gets current user data from localStorage
 const getCurrentUser = () => {
   const userData = localStorage.getItem('userData');
   return userData ? JSON.parse(userData) : null;
 };
 
-// Función corregida para verificar si el usuario tiene un rol específico
+// Checks if current user has required role(s)
 const hasRole = (requiredRoles) => {
   const user = getCurrentUser();
   if (!user || !user.position) return false;
   
-  // Verificar estructura correcta del objeto position
   if (typeof user.position === 'object' && user.position.positionName) {
     const userRole = user.position.positionName.toLowerCase();
     return requiredRoles.map(role => role.toLowerCase()).includes(userRole);
   } else if (typeof user.position === 'string') {
-    // Si position es un string (como parece estar guardado en el login)
     const userRole = user.position.toLowerCase();
     return requiredRoles.map(role => role.toLowerCase()).includes(userRole);
   }
@@ -96,9 +99,10 @@ const hasRole = (requiredRoles) => {
   return false;
 };
 
-// Inicializar interceptores cuando se importe este servicio
+// Initialize interceptors when this module is imported
 setupAxiosInterceptors();
 
+// Export service methods
 const AuthService = {
   login,
   logout,

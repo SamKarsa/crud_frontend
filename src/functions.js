@@ -1,20 +1,20 @@
-import swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-import axios from 'axios';
+import swal from 'sweetalert2'; //SweetAlert2 for beautiful alerts
+import withReactContent from 'sweetalert2-react-content'; //React integration
+import axios from 'axios'; //HTTP client
 
-import AuthService from './services/AuthService';
+import AuthService from './services/AuthService'; // Authentication service
 
-// Configurar axios para incluir automáticamente el token en las solicitudes
+// Configure axios to automatically include the JWT token in requests
 axios.interceptors.request.use(
   (config) => {
-    const token = AuthService.getToken();
+    const token = AuthService.getToken(); // Get token from storage
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
+      config.headers['Authorization'] = `Bearer ${token}`; // Add to headers
     }
     return config;
   },
   (error) => {
-    return Promise.reject(error);
+    return Promise.reject(error); // Pass through errors
   }
 );
 /*
@@ -34,17 +34,16 @@ axios.interceptors.response.use(
   }
 );*/
 
-// Función modificada para devolver una promesa y controlar el cierre de la alerta
 export function showAlert(message, icon, focus = '') {
   onfocus(focus);
-  const MySwal = withReactContent(swal);
+  const MySwal = withReactContent(swal); // React-enhanced SweetAlert
   
   return MySwal.fire({
     title: message,
     icon: icon,
     confirmButtonText: 'Aceptar',
-    allowOutsideClick: false,
-    allowEscapeKey: false
+    allowOutsideClick: false, // Prevent closing by clicking backdrop
+    allowEscapeKey: false // Prevent closing with ESC key
   });
 }
 
@@ -55,30 +54,33 @@ export async function confirmAlert(message) {
     showCancelButton: true,
     confirmButtonText: 'Yes',
     cancelButtonText: 'Cancel',
-    allowOutsideClick: false
+    allowOutsideClick: false // Prevent accidental dismissals
   });
-  return result.isConfirmed;
+  return result.isConfirmed; // Return user's choice
 }
 
 function onfocus(focus) {
   if (focus !== '') {
-    document.getElementById(focus).focus();
+    document.getElementById(focus).focus(); // Optional chaining for safety
   }
 }
 
+// API endpoints
 const delete_url = 'http://localhost:8080/api/users';
 
+//Deletes a user by ID
 export async function deleteUser(id) {
   try {
     const response = await axios.delete(`${delete_url}/${id}`);
     return response.data;
   } catch (e) {
-    throw new Error('Error deleting user:' + e.message);
+    throw new Error('Error deleting user:' + e.message); // More descriptive error
   }
 }
 
 const deletePosition_url = 'http://localhost:8080/api/positions';
 
+//Deletes a position by ID
 export async function deletePosition(id) {
   try {
     const response = await axios.delete(`${deletePosition_url}/${id}`);

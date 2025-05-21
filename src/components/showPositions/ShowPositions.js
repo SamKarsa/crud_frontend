@@ -1,24 +1,28 @@
+//IMPORTS 
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { confirmAlert, showAlert, deletePosition } from '../../functions';
 import PositionFormModal from '../positionFormModal/PositionFormModal';
-import styles from '../showUsers/ShowUsers.module.css'
+import styles from '../showUsers/ShowUsers.module.css' // Custom CSS module
 
 
 const ShowPositions = () => {
+    //API base URL 
     const url = 'http://localhost:8080/api/positions';
+    //STATE VARIABLES
     const [positions, setPositions] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredPositions, setFilteredPositions] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [modalMode, setModalMode] = useState('create');
+    const [modalMode, setModalMode] = useState('create'); //'create' or 'edit'
     const [selectedPosition, setSelectedPosition] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages,setTotalPages] = useState(1);
 
-    const hasFetched=useRef(false);
+    const hasFetched=useRef(false); // Prevent double-fetching
 
+    //INITIAL FETCH
     useEffect(() => {
         if (hasFetched.current) return;
 
@@ -27,6 +31,7 @@ const ShowPositions = () => {
         hasFetched.current=true;
     }, [searchTerm, currentPage]);
 
+    //FILTERING POSITIONS BASED ON SEARCH
     useEffect(() => {
         setFilteredPositions(
             positions.filter(position =>
@@ -36,6 +41,7 @@ const ShowPositions = () => {
         );
     }, [searchTerm, positions]);
 
+    //FETCH POSITIONS FROM API 
     const getPositions = async (page = 1, limit = 10 ) => {
         try {
             setLoading(true);
@@ -56,6 +62,7 @@ const ShowPositions = () => {
         }
     };
 
+    //HANDLE DELETE WITH CONFIRMATION
     const handleDeletePosition = async (positionid) => {
         const confirmed = await confirmAlert('Are you sure you want to delete this position?');
         if (!confirmed) return;
@@ -66,7 +73,7 @@ const ShowPositions = () => {
         showAlert('Position deleted succesfully', 'success');
         getPositions();
         //Actualizar el estado
-        await getPositions(currentPage);
+        await getPositions(currentPage); // Refresh after deletion
 
     } catch (e) {
         showAlert('Error deleting position', 'error');
@@ -74,12 +81,14 @@ const ShowPositions = () => {
     }
 }
 
+    //OPEN MODAL FOR CREATION
     const handleCreate = () => {
         setModalMode('create');
         setSelectedPosition(null);
         setShowModal(true);
     }
 
+    //OPEN MODAL FOR EDITING
     const handleEdit = (position) => {
         setModalMode('edit');
         setSelectedPosition(position);
@@ -255,6 +264,7 @@ const ShowPositions = () => {
                         </div>
                     </div>
 
+            //CREATE/EDIT MODAL
             {showModal && (
                 <PositionFormModal
                     show={showModal}

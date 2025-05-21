@@ -1,61 +1,73 @@
+/*Import custom Google font for logo styling*/
 @import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
 
+/* Styles for the entire navigation bar */
 .nav {
-    background-color: #026873;
+    background-color: #026873; /* Dark teal background */
 }
 
+/* Logo text styles */
 .logo {
-    font-family: "Limelight", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 50px;
+    font-family: "Limelight", sans-serif; /* Custom font for branding */
+    font-weight: 400; /* Normal font weight */
+    font-style: normal; /* Default font style */
+    font-size: 50px; /* Large font size for emphasis */
 }   
 
+/* Circular profile icon container */
 .profileCircle {
-    width: 50px;
-    height: 50px;
-    transition: all 0.3s;
+    width: 50px; /* Fixed width */
+    height: 50px; /* Fixed height */
+    transition: all 0.3s; /* Smooth transition on hover */
 }
 
+/* Hover effect for the profile circle */
 .profileCircle:hover {
-    background-color: #026873 !important;
+    background-color: #026873 !important; /* Change to teal on hover */
 }
 
+/* Default color for the icon inside the profile circle */
 .profileSymbol {
-    color: #026873;
-    transition: all 0.4s;
+    color: #026873; /* Teal icon color by default */
+    transition: all 0.4s; /* Smooth color transition */
 }
 
+/* Change icon color when hovering over the profile circle */
 .profileCircle:hover .profileSymbol {
-    color: #ffffff !important;
+    color: #ffffff !important; /* Icon turns white on hover */
 }
 
+/* Dropdown menu styling (user profile menu) */
 .dropdownMenu {
-    border: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    border-radius: 8px;
-    padding: 0.5rem 0;
+    border: none; /* Remove default border */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Soft shadow for depth */
+    border-radius: 8px; /* Rounded corners */
+    padding: 0.5rem 0; /* Vertical padding only */
 }
 
+/* General dropdown item style */
 .dropdown-item {
-    padding: 0.5rem 1.5rem;
-    transition: all 0.2s;
+    padding: 0.5rem 1.5rem; /* Space around items */
+    transition: all 0.2s; /* Smooth hover effect */
 }
 
+/* Specific style for the Logout button */
 .logoutButton {
-    color: #dc3545 !important;
-    display: flex;
-    align-items: center;
+    color: #dc3545 !important; /* Bootstrap 'danger' red */
+    display: flex; /* Horizontal alignment */
+    align-items: center; /* Center icon/text vertically */
 }
 
+/* Hover effect for the Logout button */
 .logoutButton:hover {
-    background-color: rgba(220, 53, 69, 0.1) !important;
-    color: #c82333;
+    background-color: rgba(220, 53, 69, 0.1) !important; /* Light red background */
+    color: #c82333; /* Darker red on hover */
 }
 
+/* Prevent focus/active styles from changing background or color */
 .dropdown-item:focus, 
 .dropdown-item:active {
-    background-color: transparent !important;
-    color: inherit !important;
+    background-color: transparent !important; /* Keep background clear */
+    color: inherit !important; /* Inherit text color */
 }
 

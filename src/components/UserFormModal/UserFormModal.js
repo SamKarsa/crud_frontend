@@ -4,8 +4,10 @@ import Button from  'react-bootstrap/Button';
 import {showAlert} from '../../functions';
 import axios from 'axios';
 
+//Modal component for creating/editing users
 const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
 
+    //Forrm state management
     const [form,setForm] = useState({
     firstName: '',
     lastName: '',
@@ -16,18 +18,23 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
     password: '',
     });
 
+    //State for avaliable positions dropdown
     const [positions, setPositions] = useState([]);
 
+    //Effect to initialize form data based on mode (create/edit)
     useEffect(() => {
         if (mode === 'edit' && userData) {
+            //Pre-fill form with existing user data for editing
             setForm({
                 firstName: userData.firstName || '',
                 lastName: userData.lastName || '',
                 email: userData.email || '',
                 phone: userData.phone || '',
                 positionId: userData.positionId || '',
+                //Note: Age and password arer intentionally left empty in edit mode
             });
         } else {
+            // Reset form for create mode
             setForm({
                 firstName: '',
                 lastName: '',
@@ -38,35 +45,34 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
                 password: '',
             });
         }
-    }, [mode, userData]);
+    }, [mode, userData]); // Re-run when mode or userData changes
 
-
+        // Effect to fetch positions when modal opens
         useEffect(() => {
             const fetchPositions = async () => {
                 try {
                     const response = await axios.get('http://localhost:8080/api/positions/all');
                     
-                    // Verifica la estructura de la respuesta
-                    console.log('API Response:', response.data);
+                    console.log('API Response:', response.data); // Debug logging
                     
-                    // Asegúrate de manejar diferentes estructuras de respuesta
+                    // Handle different API response structures
                     let receivedPositions = response.data;
                     
-                    // Si la respuesta tiene un campo 'data' (común en Axios)
+                    // Some APIs wrap data in a 'data' property
                     if (response.data && response.data.data) {
                         receivedPositions = response.data.data;
                     }
                     
-                    // Filtra solo posiciones activas y mapea correctamente
+                    // Filter active positions and normalize structure
                     const activePositions = receivedPositions
                         .filter(position => position.status === true)
                         .map(position => ({
-                            positionId: position.id || position.positionId, // Asegura compatibilidad
+                            positionId: position.id || position.positionId, // Handle different ID fields
                             positionName: position.positionName,
                             status: position.status
                         }));
                         
-                    console.log('Processed Positions:', activePositions);
+                    console.log('Processed Positions:', activePositions); // Debug logging
                     setPositions(activePositions);
                     
                 } catch (error) {
@@ -75,19 +81,21 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
                 }
             };
 
-            // Solo ejecuta si el modal está abierto
+            // Only fetch when modal is shown
             if (show) {
                 fetchPositions();
             }
-        }, [show]); // Dependencia de show en lugar de useRef
+        }, [show]); // Trigger when modal visibility changes
 
-
+    // Form validation errors state
     const [errors, setErrors] = useState({});
 
+    // Comprehensive form validation function
     const validateForm = (name,value) => {
 
         const newErrors = {...errors};
 
+            // First name validation
             if (name === 'firstName'){
                 if (!value){
                     newErrors.firstName = 'The first name is required';
@@ -100,6 +108,7 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
                 }
             }
 
+            // Last name validation (same rules as first name)
             if (name === 'lastName'){
                 if (!value){
                     newErrors.lastName = 'The last name is required';
@@ -112,6 +121,7 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
                 }
             }
 
+            // Email validation
             if (name === 'email'){
                 if (!value){
                     newErrors.email = 'The email is required';
@@ -122,6 +132,7 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
                 }
             }
 
+            // Phone validation (10 digits only)
             if (name === 'phone'){
                 if (!/^\d{10}$/.test(value)){
                     newErrors.phone = 'The phone number must be 10 digits';
@@ -130,6 +141,7 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
                 }
             }
 
+            // Age validation (18-80 range)
             if (name === 'age'){
                 if (!value){
                     newErrors.age = 'The age is required';
@@ -142,6 +154,7 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
                 }
                 }
 
+            // Password validation (only in create mode)
             if (name === 'password'){
                 if (!value){
                     newErrors.password = 'The password is required';
@@ -152,6 +165,7 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
                 }
             }
 
+            // Position validation
             if (name === 'positionId'){
                 if (!value){
                     newErrors.positionId = 'The position is required';
@@ -163,39 +177,45 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
             setErrors(newErrors);
     }
 
+        // Form input change handler
         const handleChange = e => {
         const { name, value } = e.target;
         
         let formattedValue = value;
         
-        // Formatear nombres y apellidos (primera letra mayúscula)
+        // Format names (capitalize first letters)
         if (name === 'firstName' || name === 'lastName') {
             formattedValue = value.toLowerCase().replace(/(^|\s|'|-)\w/g, char => char.toUpperCase());
         }
         
-        // Forzar minúsculas en email
+        // Format email (lowercase and trim)
         if (name === 'email') {
             formattedValue = value.toLowerCase().trim();
         }
 
+        // Update form state
         setForm({
             ...form,
             [name]: formattedValue
         });
 
+        // Validate the changed field
         validateForm(name, formattedValue);
         };
 
+        // Form submission handler
         const handleSubmit = async () => {
 
             Object.keys(form).forEach((key) => validateForm(key, form[key]));
 
+            // Check for errors
             if (Object.keys(errors).length > 0) {
                 showAlert('Please correct any errors before submitting..', 'error');
                 return;
             }
 
             try {
+                // Determine if we're creating or updating
                 if (mode === 'edit') {
                     await axios.put(`http://localhost:8080/api/users/${userData.id}`, form);
                     showAlert('User updated successfully', 'success');
@@ -203,16 +223,16 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
                     await axios.post('http://localhost:8080/api/users/', form);
                     showAlert('User created successfully', 'success');
                 }
+                // Close modal and refresh parent component
                 handleClose();
                 onSuccess();
             } catch (e) {
                 showAlert('Error saving user', 'error');
-                console.log('Payload que se envía:', userData);
+                console.log('Payload que se envía:', userData); // Debug logging
             }
         };
 
-
-
+    // Modal JSX rendering
     return (
         <Modal show={show} onHide={handleClose} centered>
             <Modal.Header closeButton>
@@ -243,6 +263,7 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
                     className={`form-control mb-2 ${errors.email ? 'is-invalid': ''}`}
                 />
                 {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+                //Phone Input
                 <input
                     name="phone"
                     placeholder="Phone"
@@ -273,6 +294,7 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
                         {errors.password && <div className="invalid-feedback">{errors.password}</div>}
                     </>
                 )}
+                //Position Dropdown
                 <select
                     name="positionId"
                     value={form.positionId}

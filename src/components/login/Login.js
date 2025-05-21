@@ -1,31 +1,35 @@
+//REACT IMPORTS 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { showAlert } from '../../functions';
-import './Login.css';
+import { useNavigate } from 'react-router-dom'; //For programmatic navigation
+import axios from 'axios'; // HTTP client for making API requests
+import { showAlert } from '../../functions'; // Custom alert utility
+import './Login.css'; // Custom styles for this component
 
+//LOGIN COMPONENT
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  //LOCAL STATE
+  const [email, setEmail] = useState(''); // Email input state
+  const [password, setPassword] = useState(''); // Password input state
+  const [loading, setLoading] = useState(false); // Loading state during login
+  const navigate = useNavigate(); // React Router navigation
 
-  // Redirigir si ya está autenticado
+  // REDIRECT IF ALREADY AUTHENTICATED
   useEffect(() => {
     const token = localStorage.getItem('authToken');
     if (token) {
-      navigate('/');
+      navigate('/'); // Redirect to home if token exists
     }
   }, [navigate]);
 
+  //LOGIN SUBMISSION HANDLER
   const handleLogin = async (e) => {
     e.preventDefault();
     
-    if (loading) return; 
+    if (loading) return; // Prevent multiple submissions 
     
     setLoading(true);
     
-    // Validación básica
+    // BASIC FORM VALIDATION
     if (!email || !password) {
       showAlert('Please enter email and password', 'error');
       setLoading(false);
@@ -33,30 +37,30 @@ const Login = () => {
     }
 
     try {
-      // Realizar petición de login
+      // MAKE LOGIN REQUEST
       const response = await axios.post('http://localhost:8080/api/auth/login', {
         email,
         password
       });
 
-      // Procesar respuesta exitosa
+      // HANDLE SUCCESSFUL RESPONSE
       if (response.data.success) {
-        // Verificar permisos antes de guardar datos
+
         const userPosition = response.data.data.position;
         
-        // Verificar si la posición es un objeto o un string
+        // Normalize position to lowercase string
         const positionName = typeof userPosition === 'object' 
           ? userPosition.positionName.toLowerCase() 
           : userPosition.toLowerCase();
         
+        //CHECK FOR REQUIRED PERMISSIONS
         if (!['admin', 'supervisor'].includes(positionName)) {
-          // Si no tiene permisos, mostrar alerta y NO guardar credenciales
           await showAlert('Insufficient permissions.', 'warning');
           setLoading(false);
           return;
         }
         
-        // Si tiene permisos, guardar token y datos de usuario
+        //STORE TOKEN AND USER DATA IN LOCALSTORAGE
         localStorage.setItem('authToken', response.data.data.token);
         
         const userData = {
@@ -70,13 +74,13 @@ const Login = () => {
         localStorage.setItem('userData', JSON.stringify(userData));
         
         
-        // Navegar a la página principal
+        // REDIRECT TO MAIN DASHBOARD
         navigate('/', { replace: true });
       }
     } catch (error) {
       console.error('Error durante el login:', error);
       
-      // Manejo de errores específicos
+      // HANDLE DIFFERENT ERROR TYPES
       if (error.response) {
         await showAlert(error.response.data.message || 'Error al iniciar sesión', 'error');
       } else if (error.request) {
@@ -85,10 +89,11 @@ const Login = () => {
         await showAlert('Error inesperado, por favor intenta de nuevo', 'error');
       }
     } finally {
-      setLoading(false);
+      setLoading(false); // Always reset loading state
     }
   };
 
+  //JSX RETURN
   return (
     <div className="login-page">
       <div className="login-container">

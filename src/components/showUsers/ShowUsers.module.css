@@ -1,120 +1,130 @@
+/*Primary button styling - Used for main action buttons like "Add User"*/
 .colorB{
-background-color: #026873;
-color: white;
-border: none;
+background-color: #026873; /* Dark teal color for primary actions */
+color: white; /* White text for contrast */
+border: none; /* No border for clean look */
 }
 
-
+/* Header panel styling - Used for the card header */
 .colorP{
-  background-color: rgb(255, 255, 255);
-  color: #026873;
+  background-color: rgb(255, 255, 255); /* Pure white background */
+  color: #026873; /* Dark teal text color */
 }
+
+/* General text color - Used for regular text elements */
 .colorT{
-  color:black;
+  color:black; /* Standard black for readability */
 }
 
+/* Icon color - Likely used for decorative elements */
 .colori{
-  background-color: #026873;
-  color:#026873
+  background-color: #026873; /* Matches primary color scheme */
+  color:#026873 /* Same as background for potential masking effects */
 }
 
+/* Default pagination link styling */
 .pageLink {
-  color: black;
+  color: black; /* Standard black for pagination numbers */
 }
 
+/* Active pagination link styling */
 .activeLink {
-  background-color: #026873;
-  color: white;
-  border-color: #026873;
+  background-color: #026873; /* Dark teal background for active page */
+  color: white; /* White text for contrast */
+  border-color: #026873; /* Matching border color */
 }
 
-
-/* Agrega estas clases a tu archivo CSS Module */
+/* Status indicator styles */
 .activeStatus {
-  background-color: rgba(29, 151, 35, 0.1);
-  color: #026873 !important; 
-  border: 1px solid #026873;
+  background-color: rgba(29, 151, 35, 0.1); /* Light green with transparency */
+  color: #026873 !important; /* Dark teal text (important to override*/
+  border: 1px solid #026873; /* Matching border */
 }
 
 .disableStatus {
-  background-color: rgba(220, 53, 69, 0.1);
-  color: #dc3545 !important;
-  border: 1px solid #dc3545;
+  background-color: rgba(220, 53, 69, 0.1); /* Light red with transparency */
+  color: #dc3545 !important; /* Bootstrap danger red text */
+  border: 1px solid #dc3545; /* Matching border */
 }
 
-/* Posición Admin - Azul fuerte con autoridad */
+/* Position badge styles - Admin */
 .adminPosition {
-  background-color: #0d6efd;
-  color: white;
-  font-weight: 600;
-  border: 1px solid #0b5ed7;
+  background-color: #0d6efd; /* Bootstrap primary blue */
+  color: white; /* White text */
+  font-weight: 600; /* Semi-bold text */
+  border: 1px solid #0b5ed7; /* Slightly darker blue border */
 }
 
-/* Posición Supervisor - Púrpura con autoridad */
+/* Position badge styles - Supervisor */
 .supervisorPosition {
-  background-color: #6f42c1;
-  color: white;
-  font-weight: 500;
-  border: 1px solid #5a32a3;
+  background-color: #6f42c1; /* Bootstrap purple */
+  color: white; /* White text */
+  font-weight: 500; /* Medium weight text */
+  border: 1px solid #5a32a3; /* Darker purple border */
 }
 
-/* Posición normal - Gris neutro */
+/* Position badge styles - Default */
 .defaultPosition {
-  background-color: #e9ecef;
-  color: #495057 !important;
-  border: 1px solid #dee2e6;
+  background-color: #e9ecef; /* Light gray background */
+  color: #495057 !important; /* Dark gray text */
+  border: 1px solid #dee2e6; /* Light gray border */
 }
 
-/* Posición inactiva - Rojo suave */
+/* Position badge styles - Inactive */
 .inactivePosition {
-  background-color: rgba(220, 53, 69, 0.1);
-  color: #dc3545 !important;
-  border: 1px solid rgba(220, 53, 69, 0.3);
+  background-color: rgba(220, 53, 69, 0.1); /* Light red with transparency */
+  color: #dc3545 !important; /* Bootstrap danger red */
+  border: 1px solid rgba(220, 53, 69, 0.3); /* Semi-transparent red border */
 }
 
 
-/* Estilos para la paginación */
+/* Pagination container styling */
 .pagination {
-    margin-bottom: 0 !important;
+    margin-bottom: 0 !important; /* Removes bottom margin */
 }
 
+/* Enhanced pagination link styling */
 .pageLink {
-    color: #495057 !important;
-    border: 1px solid #dee2e6 !important;
-    padding: 0.375rem 0.75rem !important;
-    transition: all 0.3s ease !important;
+    color: #495057 !important; /* Dark gray text */
+    border: 1px solid #dee2e6 !important; /* Light gray border */
+    padding: 0.375rem 0.75rem !important; /* Standard Bootstrap padding */
+    transition: all 0.3s ease !important; /* Smooth transition for hover effects */
 }
 
+/* Hover state for pagination links */
 .pageLink:hover {
-    background-color: #e9ecef !important;
-    border-color: #dee2e6 !important;
+    background-color: #e9ecef !important; /* Light gray background */
+    border-color: #dee2e6 !important; /* Light gray border */
 }
 
+/* Removes focus outline while maintaining accessibility */
 .pageLink:focus {
-    box-shadow: none !important;
+    box-shadow: none !important; /* Removes Bootstrap's default focus shadow */
 }
 
-/* Estilo para botones Previous y Next */
+/* Previous/Next button styling */
 .navButton {
-    background-color: #2D818B !important; /* Gris melo */
-    color: white !important;
-    border-color: #6c757d !important;
+    background-color: #2D818B !important; /* Medium teal color */
+    color: white !important; /* White text */
+    border-color: #6c757d !important; /* Gray border */
 }
 
+/* Hover state for nav buttons */
 .navButton:hover {
-    background-color: #026873 !important;
-    border-color: #2D818B !important;
+    background-color: #026873 !important; /* Darker teal */
+    border-color: #2D818B !important; /* Medium teal border */
 }
 
+/* Disabled state for nav buttons */
 .navButton:disabled {
-    background-color: #e7eaec !important;
-    border-color: #d3d9df !important;
-    color: rgb(175, 175, 175) !important;
+    background-color: #e7eaec !important; /* Very light gray */
+    border-color: #d3d9df !important; /* Light gray border */
+    color: rgb(175, 175, 175) !important; /* Light gray text */
 }
 
-/* Estilo para página activa */
+/* Active page indicator in pagination */
 .activePage .pageLink {
-    background-color: #2D818B !important;
-    border-color: #026873 !important;
-    color: white !important;
+    background-color: #2D818B !important; /* Medium teal background */
+    border-color: #026873 !important; /* Dark teal border */
+    color: white !important; /* White text */
 }

@@ -1,71 +1,73 @@
 import { Routes, Route, BrowserRouter, Navigate, useLocation } from 'react-router-dom';
-import "bootstrap-icons/font/bootstrap-icons.css";
+import "bootstrap-icons/font/bootstrap-icons.css"; //Boostrap icons
 import Showusers from './components/showUsers/ShowUsers';
 import Header from './components/header/Header';
 import ShowPositions from './components/showPositions/ShowPositions';
 import Login from './components/login/Login';
 import ProtectedRoute from './components/routes/ProtectedRoute';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'; //Bootstrap CSS
 import AuthService from './services/AuthService';
 import { useEffect } from 'react';
 
-// Componente de Layout que renderiza el Header condicionalmente
+// Layout component that conditionally renders the Header
 const Layout = () => {
-  const location = useLocation();
-  const isLoginPage = location.pathname === '/login';
+  const location = useLocation(); //Hook to access current route location
+  const isLoginPage = location.pathname === '/login'; // Check if current route is login
   
   return (
     <>
-      {/* Renderiza el Header solo si NO estamos en la página de login */}
+      {/* Conditionally render Header - hidden on login page */}
       {!isLoginPage && <Header />}
+      // Main application routes
       <Routes>
-        {/* Ruta pública de login */}
+        {/* Public route - Login page  */}
         <Route path="/login" element={<Login />} />
         
-        {/* Rutas protegidas para cualquier usuario autenticado */}
+        {/* Protected routes - accessible to any authenticated user */}
         <Route element={<ProtectedRoute />}>
-          {/* Ruta de usuarios - acceso para todos los usuarios autenticados */}
+          {/* Users dashboard - default route */}
           <Route path="/" element={<Showusers />} />
         </Route>
         
-        {/* Rutas protegidas para admin y supervisor */}
+        {/* Protected routes - only for admin and supervisor roles */}
         <Route element={<ProtectedRoute requiredRoles={['admin', 'supervisor']} />}>
           <Route path="/positions" element={<ShowPositions />} />
         </Route>
         
-        {/* Redirección para rutas no encontradas */}
+        {/* Catch-all route - redirects to home */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>
   );
 };
 
+//Main App component with token validation and routing setup
 function App() {
+  // Effect to validate token on initial load
   useEffect(() => {
-    // Configuración global para JWT
     const token = AuthService.getToken();
     if (token) {
-      // Si hay un token en localStorage, verificar su validez
+      // Async function to validate token with backend
       const checkTokenValidity = async () => {
         try {
-          // Puedes hacer una petición a tu endpoint de validación de token
+          // Make validation request to backend
           await fetch('http://localhost:8080/api/auth/validate', {
             headers: {
               'Authorization': `Bearer ${token}`
             }
           });
-          // Si no hay error, el token es válido
+          // Token is valid if no error thrown
         } catch (error) {
-          // Si hay error, el token es inválido o expiró
+          // Handle invalid/expired token
           console.error('Token inválido:', error);
-          AuthService.logout();
-          window.location.href = '/login';
+          AuthService.logout(); // Clear auth data
+          window.location.href = '/login'; // Force full page reload to reset state
         }
       };
       
       checkTokenValidity();
     }
-  }, []);
+  }, []); // Runs only once on component mount
 
   return (
     <BrowserRouter>
