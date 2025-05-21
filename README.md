@@ -163,13 +163,11 @@ El sistema implementa las siguientes medidas de seguridad:
 *Tabla de usuarios y puesto con opciones de filtrado y acciones CRUD*
 
 ### Modal de creación de Usuario y Puesto
-![image](https://github.com/user-attachments/assets/0280dce4-5f6c-45fa-8e34-070ce0bd0516)
-![image](https://github.com/user-attachments/assets/afacd909-43e7-4d72-adb6-b6f80cd4e491)
+![image](https://github.com/user-attachments/assets/0280dce4-5f6c-45fa-8e34-070ce0bd0516) ![image](https://github.com/user-attachments/assets/afacd909-43e7-4d72-adb6-b6f80cd4e491)
 *Formulario para crear usuarios o puesto con validación en tiempo real*
 
 ### Modal de Edición de Usuario y position
-![image](https://github.com/user-attachments/assets/c3bcf7ad-b8ff-4690-964f-45ae5bf1ce4b)
-![image](https://github.com/user-attachments/assets/67767ae7-2e49-4bc7-9224-591e54b1abac)
+![image](https://github.com/user-attachments/assets/c3bcf7ad-b8ff-4690-964f-45ae5bf1ce4b) ![image](https://github.com/user-attachments/assets/67767ae7-2e49-4bc7-9224-591e54b1abac)
 *Formulario para editar información de usuarios y puesto con validación en tiempo real*
 
 ---
