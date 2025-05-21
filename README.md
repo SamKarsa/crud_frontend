@@ -157,11 +157,12 @@ El sistema implementa las siguientes medidas de seguridad:
 ![image](https://github.com/user-attachments/assets/60c741cf-3939-4506-b4f5-873113a07376)
 *Interfaz de autenticación con validación de campos y feedback visual*
 
-### Dashboard de Usuarios
-[Insertar imagen del listado de usuarios aquí]
-*Tabla de usuarios con opciones de filtrado y acciones CRUD*
+### Dashboard de Usuarios y Puesto
+![image](https://github.com/user-attachments/assets/b29f4615-7893-4d53-8dde-3c11f9b73415)
+![image](https://github.com/user-attachments/assets/860e71e4-83c9-4c60-8505-27225d0cec27)
+*Tabla de usuarios y puesto con opciones de filtrado y acciones CRUD*
 
-### Modal de Edición de Usuario
+### Modal de Edición de Usuario y position
 [Insertar imagen del modal de edición aquí]
 *Formulario para editar información de usuarios con validación en tiempo real*
 
