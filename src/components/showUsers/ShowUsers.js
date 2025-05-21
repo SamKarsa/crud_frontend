@@ -23,7 +23,7 @@ const ShowUsers = () => {
 
         getUsers(currentPage);
         hasFetched.current = true;
-    }, [searchTerm]);
+    }, [searchTerm, currentPage]);
 
     useEffect(() => {
         setFilteredUsers(
@@ -60,10 +60,9 @@ const ShowUsers = () => {
         try{
             await deleteUser(id);
             showAlert('User deleted successfully', 'success');
-            await getUsers(currentPage); // o conservar la misma página
-
-        
-        }catch (e){
+            await getUsers(currentPage); // o conservar la misma página 
+        } catch (e) {
+            console.error('Error deleting user:', e);
             showAlert('Error deleting user', 'error');
         }
     };
@@ -87,7 +86,7 @@ const ShowUsers = () => {
     if (loading) {
         return (
             <div className="d-flex justify-content-center align-items-center" style={{ height: '300px' }}>
-                <div className="spinner-border spinner-border-lg text-primary" role="status">
+                <div className="spinner-border spinner-border-lg text-primary">
                     <span className="visually-hidden">Cargando...</span>
                 </div>
             </div>
@@ -102,8 +101,7 @@ const ShowUsers = () => {
                     <div className="row align-items-center">
                         <div className="col">
                             <h3 className={`${styles.colorT} mb-1 d-flex align-items-center`}>
-                                <i className={`bi bi-people-fill me-2`}></i>
-                                Users
+                                <i className={`bi bi-people-fill me-2`}></i> Users
                             </h3>
                             <p className={`${styles.colorT} mb-0 small `}>Complete gestion of registered users</p>
                         </div>
@@ -131,8 +129,7 @@ const ShowUsers = () => {
                             <button 
                                 onClick={handleCreate}
                                 className={`${styles.colorB}  fw-semibold px-4 py-2 rounded-pill `}>
-                                <i className="bi bi-plus-lg me-2"></i>
-                                Add User
+                                <i className="bi bi-plus-lg me-2"></i> Add User
                             </button>
                         </div>
                     </div>
@@ -204,7 +201,7 @@ const ShowUsers = () => {
                                             </span>
                                             </td>
                                             <td className="text-end pe-4">
-                                                <div className="btn-group" role="group">
+                                                <div className="btn-group">
                                                     <button 
                                                         onClick={() => handleEdit(user)}
                                                         className="btn btn-outline-primary btn-sm rounded-start" 
@@ -272,7 +269,7 @@ const ShowUsers = () => {
                                     {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                                         <li 
                                             key={page} 
-                                            className={`page-item ${currentPage === page ? `active ${styles.activePage}` : ''}`}
+                                            className={`page-item${currentPage === page ? ' active ' + styles.activePage : ''}`}
                                         >
                                             <button
                                                 className={`page-link ${styles.pageLink}`}

@@ -51,7 +51,7 @@ const Login = () => {
         
         if (!['admin', 'supervisor'].includes(positionName)) {
           // Si no tiene permisos, mostrar alerta y NO guardar credenciales
-          await showAlert('Permisos insuficientes. Se requiere posición de admin o supervisor.', 'warning');
+          await showAlert('Insufficient permissions.', 'warning');
           setLoading(false);
           return;
         }
@@ -90,72 +90,66 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-md-6 col-lg-5">
-            <div className="card login-card shadow">
-              <div className="card-body p-5">
-                <div className="text-center mb-4">
-                  <h2 className="login-title">CRUD App</h2>
-                  <p className="text-muted">Ingresa a tu cuenta</p>
-                </div>
-                
-                <form onSubmit={handleLogin} noValidate>
-                  <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email</label>
-                    <div className="input-group">
-                      <span className="input-group-text">
-                        <i className="bi bi-envelope-fill"></i>
-                      </span>
-                      <input 
-                        type="email" 
-                        className="form-control" 
-                        id="email" 
-                        placeholder="ejemplo@email.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                        autoComplete="username"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="mb-4">
-                    <label htmlFor="password" className="form-label">Contraseña</label>
-                    <div className="input-group">
-                      <span className="input-group-text">
-                        <i className="bi bi-lock-fill"></i>
-                      </span>
-                      <input 
-                        type="password" 
-                        className="form-control" 
-                        id="password" 
-                        placeholder="Tu contraseña"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                        autoComplete="current-password"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="d-grid gap-2">
-                    <button 
-                      type="submit" 
-                      className="btn btn-primary btn-lg"
-                      disabled={loading}
-                    >
-                      {loading ? (
-                        <>
-                          <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                          Cargando...
-                        </>
-                      ) : 'Iniciar sesión'}
-                    </button>
-                  </div>
-                </form>
+    <div className="login-page">
+      <div className="login-container">
+        <div className="login-card-wrapper">
+          <div className="login-card">
+            <div className="login-header">
+              <div className="login-logo">CRUD</div>
+              <h1>Welcome</h1>
+              <p>Join your cretentials to continue</p>
+            </div>
+            
+            <form onSubmit={handleLogin} noValidate>
+              <div className="form-floating mb-4">
+                <input 
+                  type="email" 
+                  className="form-control" 
+                  id="email" 
+                  placeholder="ejemplo@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  autoComplete="username"
+                />
+                <label htmlFor="email"><i className="bi bi-envelope-fill me-2"></i>Email</label>
               </div>
+              
+              <div className="form-floating mb-4">
+                <input 
+                  type="password" 
+                  className="form-control" 
+                  id="password" 
+                  placeholder="Tu contraseña"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  autoComplete="current-password"
+                />
+                <label htmlFor="password"><i className="bi bi-lock-fill me-2"></i>Password</label>
+              </div>
+              
+              <div className="d-grid">
+                <button 
+                  type="submit" 
+                  className="btn btn-login"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm me-2" aria-hidden="true"></span> loading...
+                    </>
+                  ) : 'Log In'}
+                </button>
+              </div>
+            </form>
+            
+            <div className="login-divider">
+              <span>CRUD Management System</span>
+            </div>
+            
+            <div className="login-footer">
+              <p>User and position management system</p>
             </div>
           </div>
         </div>

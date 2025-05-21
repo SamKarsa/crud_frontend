@@ -29,3 +29,33 @@
 .profileCircle:hover .profileSymbol {
     color: #ffffff !important;
 }
+
+.dropdownMenu {
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    padding: 0.5rem 0;
+}
+
+.dropdown-item {
+    padding: 0.5rem 1.5rem;
+    transition: all 0.2s;
+}
+
+.logoutButton {
+    color: #dc3545 !important;
+    display: flex;
+    align-items: center;
+}
+
+.logoutButton:hover {
+    background-color: rgba(220, 53, 69, 0.1) !important;
+    color: #c82333;
+}
+
+.dropdown-item:focus, 
+.dropdown-item:active {
+    background-color: transparent !important;
+    color: inherit !important;
+}
+
