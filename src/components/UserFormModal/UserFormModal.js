@@ -221,7 +221,7 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
             <Modal.Body>
                 <input
                     name="firstName"
-                    placeholder="Nombre"
+                    placeholder="First name"
                     value={form.firstName}
                     onChange={handleChange}
                     className={`form-control mb-2 ${errors.firstName ? 'is-invalid': ''}`}
@@ -229,7 +229,7 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
                 {errors.firstName && <div className="invalid-feedback">{errors.firstName}</div>}
                 <input
                     name="lastName"
-                    placeholder="Apellido"
+                    placeholder="Last name"
                     value={form.lastName}
                     onChange={handleChange}
                     className={`form-control mb-2 ${errors.lastName ? 'is-invalid': ''}`}
@@ -237,7 +237,7 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
                 {errors.lastName && <div className="invalid-feedback">{errors.lastName}</div>}
                 <input
                     name="email"
-                    placeholder="Correo"
+                    placeholder="Email"
                     value={form.email}
                     onChange={handleChange}
                     className={`form-control mb-2 ${errors.email ? 'is-invalid': ''}`}
@@ -245,7 +245,7 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
                 {errors.email && <div className="invalid-feedback">{errors.email}</div>}
                 <input
                     name="phone"
-                    placeholder="Teléfono"
+                    placeholder="Phone"
                     value={form.phone}
                     onChange={handleChange}
                     className={`form-control mb-2 ${errors.phone ? 'is-invalid': ''}`}
@@ -256,7 +256,7 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
                         <input
                             name="age"
                             type="number"
-                            placeholder="Edad"
+                            placeholder="Age"
                             value={form.age}
                             onChange={handleChange}
                             className={`form-control mb-2 ${errors.age ? 'is-invalid': ''}`}
@@ -265,7 +265,7 @@ const UserFormModal = ({show,handleClose, userData, onSuccess,mode}) => {
                         <input
                             name="password"
                             type="password"
-                            placeholder="Contraseña"
+                            placeholder="Password"
                             value={form.password}
                             onChange={handleChange}
                             className={`form-control mb-2 ${errors.password ? 'is-invalid': ''}`}
