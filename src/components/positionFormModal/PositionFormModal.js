@@ -40,10 +40,10 @@ const PositionFormModal = ({ show, handleClose, positionData, onSuccess, mode })
         if (name === 'positionName'){
             if (!value){
                 newErrors.positionName = 'Position name is required';
-            }else if (value.lenght < 3 || value.lenght > 50){
+            }else if (value.length < 3 || value.length > 50){
                 newErrors.positionName = 'Position name must be between 3 and 50 characters';
             }else{
-                delete newErrors.postionName;
+                delete newErrors.positionName;
             }
         }
         setErrors(newErrors);
@@ -109,7 +109,7 @@ const PositionFormModal = ({ show, handleClose, positionData, onSuccess, mode })
     return (
         <Modal show={show} onHide={handleClose} centered>
             <Modal.Header closeButton>
-                <Modal.Title>{mode === 'create' ? 'Creat Position' : 'Edit Position'}</Modal.Title>
+                <Modal.Title>{mode === 'create' ? 'Create Position' : 'Edit Position'}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <input
