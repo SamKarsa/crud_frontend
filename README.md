@@ -1,63 +1,173 @@
-# User CRUD - Frontend
+# 🚀 User CRUD - Frontend
 
-Este es el frontend del sistema CRUD de usuarios y posiciones desarrollado como parte del proyecto de Ingeniería de Software II.
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white)
+![SweetAlert](https://img.shields.io/badge/SweetAlert-FF6384?style=for-the-badge&logo=sweetalert&logoColor=white)
 
-👉 Repositorio del backend: [User CRUD](https://github.com/JarolParia/CRUD.git)
+Interfaz de usuario para el sistema de gestión de usuarios y posiciones desarrollado como parte del proyecto de Ingeniería de Software II. Esta aplicación implementa un CRUD completo con autenticación basada en roles.
 
-## 🚀 Descripción
-
-El sistema permite gestionar usuarios y sus posiciones dentro de una empresa. Solo usuarios autenticados con roles de **admin** o **supervisor** pueden acceder al sistema.
-
-⚠️ **Nota:** Es necesario tener el backend corriendo previamente para que el frontend funcione correctamente y pueda comunicarse con la API.
-
----
-
-### Funcionalidades:
-- Autenticación con login para roles específicos.
-- Vista de todos los usuarios con filtros.
-- Vista de todas las posiciones con filtros.
-- Creación, actualización, eliminación y visualización de registros.
-- Cambio de estado y edición de atributos como nombre, correo y posición.
+👉 **Repositorio del backend:** [User CRUD Backend](https://github.com/JarolParia/CRUD.git)
 
 ---
 
-## 🧰 Tecnologías utilizadas
+## 📋 Tabla de Contenidos
 
-- React
-- Bootstrap
-- SweetAlert
-- Axios
+- [Descripción](#-descripción)
+- [Funcionalidades Principales](#-funcionalidades-principales)
+- [Tecnologías Utilizadas](#-tecnologías-utilizadas)
+- [Estructura del Proyecto](#-estructura-del-proyecto)
+- [Instalación](#-instalación)
+- [Seguridad y Autenticación](#-seguridad-y-autenticación)
+- [Capturas de Pantalla](#-capturas-de-pantalla)
+- [Autores](#-autores)
+
+---
+
+## 📝 Descripción
+
+El sistema permite gestionar usuarios y sus posiciones dentro de una empresa a través de una interfaz intuitiva y responsiva. Solo usuarios autenticados con roles de **admin** o **supervisor** pueden acceder al sistema.
+
+⚠️ **Nota importante:** Es necesario tener el backend corriendo previamente para que el frontend funcione correctamente y pueda comunicarse con la API.
+
+---
+
+## 🔐 Funcionalidades Principales
+
+- **Autenticación de Usuarios**
+  - Login con validación de roles (admin/supervisor)
+  - Persistencia de sesión
+  - Rutas protegidas por roles
+  - Logout seguro
+
+- **Gestión de Usuarios**
+  - Visualización tabulada con paginación
+  - Filtros por nombre, correo y posición
+  - Creación de nuevos usuarios con validación completa
+  - Edición de datos de usuario existente
+  - Cambio de estado (activo/inactivo)
+
+- **Gestión de Posiciones**
+  - Listado de posiciones disponibles
+  - Creación de nuevas posiciones
+  - Edición de posiciones existentes
+  - Cambio de estado (activo/inactivo)
+
+- **Interfaz Responsiva**
+  - Diseño adaptable a móviles y escritorio
+  - Feedback visual para todas las operaciones
+  - Validación de formularios en tiempo real
+
+---
+
+## 🧰 Tecnologías Utilizadas
+
+- **React** - Biblioteca para construir interfaces de usuario
+- **React Router** - Manejo de rutas y navegación
+- **Bootstrap** - Framework CSS para diseño responsivo
+- **Axios** - Cliente HTTP para realizar peticiones a la API
+- **SweetAlert** - Biblioteca para mostrar alertas personalizadas
+- **JWT** - Autenticación basada en tokens
+
+---
+
+## 📂 Estructura del Proyecto
+
+```
+CRUD_FRONTEND/
+├── node_modules/
+├── public/
+├── src/
+│   ├── components/
+│   │   ├── header/             # Barra de navegación principal
+│   │   ├── login/              # Componente de inicio de sesión
+│   │   ├── positionFormModal/  # Modal para crear/editar posiciones
+│   │   ├── routes/             # Componente de rutas protegidas
+│   │   ├── showPositions/      # Listado de posiciones
+│   │   ├── showUsers/          # Listado de usuarios
+│   │   └── UserFormModal/      # Modal para crear/editar usuarios
+│   ├── services/
+│   │   └── AuthService.js      # Servicios de autenticación
+│   ├── App.css                 # Estilos globales
+│   ├── App.js                  # Componente principal y rutas
+│   ├── functions.js            # Funciones de utilidad
+│   ├── index.js                # Punto de entrada de React
+│   └── reportWebVitals.js      # Métricas de rendimiento
+├── .gitignore
+├── package-lock.json
+├── package.json
+└── README.md
+```
 
 ---
 
 ## 📦 Instalación
 
-1. Clona el repositorio:
+### Requisitos Previos
+- Node.js (v14 o superior)
+- NPM (v6 o superior)
+- Backend del proyecto en ejecución ([Ver repositorio](https://github.com/JarolParia/CRUD.git))
+
+### Pasos
+
+1. **Clonar el repositorio:**
 
 ```bash
-https://github.com/SamKarsa/user-crud-frontend.git
+git clone https://github.com/SamKarsa/user-crud-frontend.git
+cd user-crud-frontend
 ```
 
-2. Navega al proyecto y descarga las dependencias:
+2. **Instalar dependencias:**
 
 ```bash
-cd user-crud-frontend
 npm install
 ```
 
-3. Ejecuta la aplicación en desarrollo:
+3. **Iniciar la aplicación en modo desarrollo:**
 
 ```bash
 npm start
 ```
 
-4. Abre tu navegador en: http://localhost:3000
+La aplicación estará disponible en `http://localhost:3000`.
+
+4. **Compilar para producción:**
+
+```bash
+npm run build
+```
 
 ---
 
-## ⚙️ Configuración
+## 🔒 Seguridad y Autenticación
 
-No se requiere configuración adicional más allá de tener instalado Node.js. El proyecto está listo para ejecutarse localmente después de instalar los módulos.
+El sistema implementa las siguientes medidas de seguridad:
+
+- **Tokens JWT**: Almacenados en localStorage para mantener la sesión
+- **Interceptores Axios**: Adjuntan automáticamente el token a todas las peticiones
+- **Rutas Protegidas**: Verificación de autenticación y roles antes de mostrar contenido
+- **Validaciones**: Todos los formularios incluyen validación tanto de cliente como de servidor
+- **Retroalimentación**: Alertas y mensajes claros al usuario sobre el estado de las operaciones
+
+---
+
+## 📸 Capturas de Pantalla
+
+### Pantalla de Login
+[Insertar imagen de login aquí]
+*Interfaz de autenticación con validación de campos y feedback visual*
+
+### Dashboard de Usuarios
+[Insertar imagen del listado de usuarios aquí]
+*Tabla de usuarios con opciones de filtrado y acciones CRUD*
+
+### Modal de Edición de Usuario
+[Insertar imagen del modal de edición aquí]
+*Formulario para editar información de usuarios con validación en tiempo real*
+
+### Gestión de Posiciones
+[Insertar imagen de la gestión de posiciones aquí]
+*Interfaz para administrar las posiciones disponibles en el sistema*
 
 ---
 
@@ -67,8 +177,4 @@ No se requiere configuración adicional más allá de tener instalado Node.js. E
 - [**Jarol Stiben Paria Ramírez**](https://github.com/JarolParia)
 - [**Karen Daniela Garzón Morales**](https://github.com/Karencita777)
 
-Todos los desarrolladores participaron activamente en el diseño y desarrollo del **frontend** y **backend** del sistema User CRUD
-
-
-
-
+Todos los desarrolladores participaron activamente en el diseño y desarrollo del **frontend** y **backend** del sistema User CRUD.
