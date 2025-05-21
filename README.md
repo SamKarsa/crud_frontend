@@ -154,7 +154,7 @@ El sistema implementa las siguientes medidas de seguridad:
 ## 📸 Capturas de Pantalla
 
 ### Pantalla de Login
-[Insertar imagen de login aquí]
+![image](https://github.com/user-attachments/assets/60c741cf-3939-4506-b4f5-873113a07376)
 *Interfaz de autenticación con validación de campos y feedback visual*
 
 ### Dashboard de Usuarios
